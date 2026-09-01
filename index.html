@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Tanısan Seversin - Masa Oyunu</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-base">
+
+  <!-- ====================================================================
+       SETUP SCREEN — tam sayfa, iki kolonlu layout
+       ==================================================================== -->
+  <section id="setupScreen" class="screen active">
+
+    <!-- Sol Kolon: Başlık + Büyük Vizual Alan -->
+    <div class="setup-left">
+      <div class="setup-brand">
+        <h1 class="brand-title">Tanısan<br>Seversin</h1>
+        <p class="brand-subtitle">Cihazı elden ele dolaştırın,<br>birbirinizi gerçekten tanıyın.</p>
+      </div>
+
+      <div class="setup-category-preview" id="catPreviewArea">
+        <div class="preview-label">Seçili Desteler</div>
+        <div class="preview-chips" id="previewChips"></div>
+      </div>
+
+      <div class="setup-left-footer">
+        <div class="rules-block">
+          <div class="rules-item">
+            <span class="rules-num">01</span>
+            <span>Cihazı sırayla elden ele verin</span>
+          </div>
+          <div class="rules-item">
+            <span class="rules-num">02</span>
+            <span>Kartı çekin, soruyu sesli cevaplayın</span>
+          </div>
+          <div class="rules-item">
+            <span class="rules-num">03</span>
+            <span>Pas geçmek yasak — cezası var</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sağ Kolon: Oyun Ayarları -->
+    <div class="setup-right">
+
+      <!-- Oyuncular -->
+      <div class="setup-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Oyuncular</h2>
+          <span class="panel-hint" id="playerCountHint">0 / min 2</span>
+        </div>
+        <div class="player-input-row">
+          <input type="text" id="playerNameInput" class="input-field" placeholder="Oyuncu adı yazın..." autocomplete="off" />
+          <button type="button" id="btnAddPlayer" class="btn-add-player">Ekle</button>
+        </div>
+        <div class="players-list" id="playersList">
+          <div class="no-players-text" id="noPlayersText">Henüz kimse eklenmedi.</div>
+        </div>
+      </div>
+
+      <!-- Mod Seçimi -->
+      <div class="setup-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Oyun Modu</h2>
+        </div>
+        <div class="mode-options">
+          <div class="mode-option active" id="modeAlcohol" data-mode="alcohol">
+            <span class="mode-title">🍺 Alkollü</span>
+            <span class="mode-penalty-desc">Pas → 1 shot</span>
+          </div>
+          <div class="mode-option" id="modeNonAlcohol" data-mode="non_alcohol">
+            <span class="mode-title">🚫 Alkolsüz</span>
+            <span class="mode-penalty-desc">Pas → 3 ceza kartı</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kategoriler -->
+      <div class="setup-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Desteler</h2>
+          <div class="category-quick-actions">
+            <button type="button" id="btnSelectAllCats" class="btn-text-action">Tümü</button>
+            <button type="button" id="btnClearCats" class="btn-text-action">Temizle</button>
+          </div>
+        </div>
+        <div class="category-chips" id="categoriesContainer">
+          <div class="cat-chip selected" data-cat="icebreaker">Yeni Tanışma</div>
+          <div class="cat-chip selected" data-cat="friends">Arkadaşlar Arası</div>
+          <div class="cat-chip selected" data-cat="flirt">Flört & İlk Buluşma</div>
+          <div class="cat-chip" data-cat="family">Aile</div>
+          <div class="cat-chip" data-cat="dirty">Dirty</div>
+          <div class="cat-chip" data-cat="nsfw">NSFW</div>
+          <div class="cat-chip" data-cat="deep">En Gizli Sırlar</div>
+        </div>
+      </div>
+
+      <button type="button" id="btnStartGame" class="btn-start-game" disabled>Oyunu Başlat</button>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       GAME SCREEN
+       ==================================================================== -->
+  <section id="gameScreen" class="screen">
+    <div class="app-container">
+      <!-- Top Navigation & Stats -->
+      <div class="game-topbar">
+        <div class="topbar-left">
+          <button type="button" id="btnExitGame" class="btn-icon-clear" title="Masadan Kalk">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+          </button>
+          <button type="button" id="btnToggleMute" class="btn-icon-clear" title="Sesi Kapat">
+            <svg id="muteIconSvg" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          </button>
+        </div>
+        <div class="game-stats" id="cardStatsPill">
+          KART <span id="drawnCardCount">0</span>
+        </div>
+      </div>
+
+      <!-- Penalty Banner -->
+      <div class="penalty-banner" id="penaltyBanner">
+        <div class="penalty-text">
+          CEZA KARTI <span id="penaltyCurrentStep">1</span>/3
+        </div>
+        <div class="penalty-dots">
+          <div class="penalty-dot filled" id="pDot1"></div>
+          <div class="penalty-dot" id="pDot2"></div>
+          <div class="penalty-dot" id="pDot3"></div>
+        </div>
+      </div>
+
+      <!-- Card Stage -->
+      <div class="card-stage" id="cardStage">
+        <div class="active-card" id="activeCard">
+          <div class="card-turn-info" id="turnBanner">
+            <div class="card-turn-label">SIRA SENDE</div>
+            <div class="card-turn-name" id="turnPlayerName">Oyuncu</div>
+          </div>
+
+          <div class="card-prompt-state" id="cardPromptState">
+            <h3 class="card-prompt-title" id="cardPromptTitle">Desteden Çek</h3>
+            <p class="card-prompt-sub" id="cardPromptSub">Rastgele bir soru gelecek.</p>
+          </div>
+
+          <div class="card-content-state" id="cardContentState">
+            <div class="card-question-wrap">
+              <p class="card-question-text" id="cardQuestionText">Soru metni...</p>
+            </div>
+            <div class="card-footer-info" id="cardFooterCat">Kategori Adı</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Answer Actions -->
+      <div class="game-actions" id="gameActions" style="visibility: hidden;">
+        <button type="button" id="btnPass" class="btn-action btn-pass">Pas</button>
+        <button type="button" id="btnAnswer" class="btn-action btn-answer">Cevapladım</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       MODALS
+       ==================================================================== -->
+  <div class="modal-overlay" id="shotModal">
+    <div class="modal-card">
+      <h2>🍺 Shot Vakti!</h2>
+      <p><strong id="shotPlayerName">Oyuncu</strong> pas geçtiği için 1 shot atmak zorunda.</p>
+      <button type="button" id="btnConfirmShot" class="btn-modal-primary">İçildi & Devam</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="confirmRestartModal">
+    <div class="modal-card">
+      <h2>Masadan Kalk?</h2>
+      <p>Oyun sonlanacak ve başlangıç ekranına dönülecek. Emin misin?</p>
+      <button type="button" id="btnConfirmRestart" class="btn-modal-primary" style="background-color: var(--accent-color);">Bitir</button>
+      <button type="button" id="btnCancelRestart" class="btn-modal-secondary">Vazgeç</button>
+    </div>
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
