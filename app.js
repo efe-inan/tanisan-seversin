@@ -549,6 +549,30 @@
     validateSetup();
     updatePreviewChips();
     setTheme(null); // Init base theme
+
+    // Kart görsellerini arka planda önbelleğe al (gecikmeyi önler)
+    preloadAssets();
+  }
+
+  // ==========================================================================
+  // ASSET PRELOADER (Görselleri Arka Planda Önbelleğe Alma)
+  // Kart çevrildiğinde görselin geç yüklenmesini / takılmasını önler
+  // ==========================================================================
+  const PRELOAD_IMAGES = [
+    'tasarim/yeni-tanisma.png',
+    'tasarim/arkadaslar-arasi.png',
+    'tasarim/flort-ilkbulusma.png',
+    'tasarim/aile.png',
+    'tasarim/dirty.png',
+    'tasarim/nsfw.png',
+    'tasarim/en-gizli-sirlar.png'
+  ];
+
+  function preloadAssets() {
+    PRELOAD_IMAGES.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
   }
 
   // DOM Yüklendiğinde başlat
