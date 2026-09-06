@@ -67,6 +67,7 @@
     // Card Stage
     cardStage: document.getElementById('cardStage'),
     cardFlipper: document.getElementById('cardFlipper'),
+    cardBack: document.getElementById('cardBack'),
     cardPromptState: document.getElementById('cardPromptState'),
     cardPromptTitle: document.getElementById('cardPromptTitle'),
     cardPromptSub: document.getElementById('cardPromptSub'),
@@ -330,6 +331,9 @@
       DOM.cardFlipper.className = 'card-flipper';
       DOM.cardFlipper.style.cssText = '';
     }
+    if (DOM.cardBack) {
+      DOM.cardBack.style.display = 'none';
+    }
     
     DOM.setupScreen.classList.remove('active');
     DOM.gameScreen.classList.add('active');
@@ -408,6 +412,9 @@
     state.totalCardsDrawn++;
     DOM.drawnCardCount.textContent = state.totalCardsDrawn;
 
+    // Kart arkasının görünürlüğünü tekrar aç
+    if (DOM.cardBack) DOM.cardBack.style.display = '';
+
     // DOM Update — populate the back face
     DOM.cardQuestionText.textContent = card.question;
     DOM.cardFooterCat.textContent = card.categoryName;
@@ -473,7 +480,11 @@
 
     // Fade out süresi (CSS opacity 0.25s) bittiğinde
     setTimeout(() => {
-      // 3) Görünmezken transition'ı kapat ve 0deg'ye sıfırla
+      // 3) Görünmezken kart arkasını anında gizle (display none)
+      // Böylece 0 dereceye döndüğünde asla ayna veya ters yazı gösteremez
+      if (DOM.cardBack) DOM.cardBack.style.display = 'none';
+
+      // Transition'ı kapat ve 0deg'ye sıfırla
       DOM.cardFlipper.classList.add('no-transition');
       DOM.cardFlipper.classList.remove('flipped');
       
