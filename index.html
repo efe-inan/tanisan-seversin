@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Tanısan Seversin - Masa Oyunu</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body class="theme-base">
 
@@ -136,22 +136,42 @@
 
       <!-- Card Stage -->
       <div class="card-stage" id="cardStage">
-        <div class="active-card" id="activeCard">
-          <div class="card-turn-info" id="turnBanner">
-            <div class="card-turn-label">SIRA SENDE</div>
-            <div class="card-turn-name" id="turnPlayerName">Oyuncu</div>
-          </div>
-
-          <div class="card-prompt-state" id="cardPromptState">
-            <h3 class="card-prompt-title" id="cardPromptTitle">Desteden Çek</h3>
-            <p class="card-prompt-sub" id="cardPromptSub">Rastgele bir soru gelecek.</p>
-          </div>
-
-          <div class="card-content-state" id="cardContentState">
-            <div class="card-question-wrap">
-              <p class="card-question-text" id="cardQuestionText">Soru metni...</p>
+        <div class="card-flipper" id="cardFlipper">
+          <!-- FRONT: Prompt side (Desteden Çek) -->
+          <div class="card-face card-front" id="activeCard">
+            <div class="card-turn-info" id="turnBanner">
+              <div class="card-turn-label">SIRA SENDE</div>
+              <div class="card-turn-name" id="turnPlayerName">Oyuncu</div>
             </div>
-            <div class="card-footer-info" id="cardFooterCat">Kategori Adı</div>
+
+            <div class="card-prompt-state" id="cardPromptState">
+              <h3 class="card-prompt-title" id="cardPromptTitle">Desteden Çek</h3>
+              <p class="card-prompt-sub" id="cardPromptSub">Rastgele bir soru gelecek.</p>
+            </div>
+
+            <!-- Decorative card back pattern -->
+            <div class="card-front-pattern">
+              <div class="pattern-diamond"></div>
+              <div class="pattern-corner tl">❖</div>
+              <div class="pattern-corner tr">❖</div>
+              <div class="pattern-corner bl">❖</div>
+              <div class="pattern-corner br">❖</div>
+            </div>
+          </div>
+
+          <!-- BACK: Question side -->
+          <div class="card-face card-back" id="cardBack">
+            <div class="card-turn-info card-back-turn">
+              <div class="card-turn-label">SIRA SENDE</div>
+              <div class="card-turn-name" id="turnPlayerNameBack">Oyuncu</div>
+            </div>
+
+            <div class="card-content-state active">
+              <div class="card-question-wrap">
+                <p class="card-question-text" id="cardQuestionText">Soru metni...</p>
+              </div>
+              <div class="card-footer-info" id="cardFooterCat">Kategori Adı</div>
+            </div>
           </div>
         </div>
       </div>
@@ -186,6 +206,6 @@
 
   <script src="audio.js"></script>
   <script src="questions.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>

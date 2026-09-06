@@ -65,13 +65,14 @@
     pDot3: document.getElementById('pDot3'),
 
     // Card Stage
-    activeCard: document.getElementById('activeCard'),
+    cardStage: document.getElementById('cardStage'),
+    cardFlipper: document.getElementById('cardFlipper'),
     cardPromptState: document.getElementById('cardPromptState'),
     cardPromptTitle: document.getElementById('cardPromptTitle'),
     cardPromptSub: document.getElementById('cardPromptSub'),
-    cardContentState: document.getElementById('cardContentState'),
     cardQuestionText: document.getElementById('cardQuestionText'),
     cardFooterCat: document.getElementById('cardFooterCat'),
+    turnPlayerNameBack: document.getElementById('turnPlayerNameBack'),
 
     // Actions
     gameActions: document.getElementById('gameActions'),
@@ -317,10 +318,18 @@
     state.categoryDecks = {};
     state.currentPlayerIndex = 0;
     state.totalCardsDrawn = 0;
+    state.isCardDrawn = false;
+    state.isAnimating = false;
     state.penalty.isActive = false;
     state.penalty.remainingCards = 0;
     
     setTheme(null); // Oyuna başlarken idle temasına (base) geç
+    
+    // Flipper'ı temiz başlat
+    if (DOM.cardFlipper) {
+      DOM.cardFlipper.className = 'card-flipper';
+      DOM.cardFlipper.style.cssText = '';
+    }
     
     DOM.setupScreen.classList.remove('active');
     DOM.gameScreen.classList.add('active');
@@ -343,7 +352,9 @@
   function updateTurnView() {
     resetCardPromptView();
     
-    DOM.turnPlayerName.textContent = state.players[state.currentPlayerIndex];
+    const currentPlayer = state.players[state.currentPlayerIndex];
+    DOM.turnPlayerName.textContent = currentPlayer;
+    DOM.turnPlayerNameBack.textContent = currentPlayer;
     DOM.drawnCardCount.textContent = state.totalCardsDrawn;
 
     if (state.penalty.isActive && state.penalty.remainingCards > 0) {
@@ -371,8 +382,6 @@
 
     setTheme(null); // Kart kapanınca base temaya dön
 
-    DOM.cardPromptState.style.display = 'flex';
-    DOM.cardContentState.classList.remove('active');
     DOM.gameActions.style.visibility = 'hidden';
 
     if (state.penalty.isActive) {
@@ -386,37 +395,38 @@
   }
 
   function onCardClick() {
-    if (state.isCardDrawn) return; // Kart zaten açıkken tıklama yok sayılır
+    if (state.isCardDrawn || state.isAnimating) return; // Kart açıkken veya animasyondayken tıklama yok sayılır
 
     const card = drawRandomCard();
     if (!card) return;
 
+    state.isAnimating = true;
     state.isCardDrawn = true;
     state.currentCard = card;
     state.totalCardsDrawn++;
     DOM.drawnCardCount.textContent = state.totalCardsDrawn;
+
+    // DOM Update — populate the back face
+    DOM.cardQuestionText.textContent = card.question;
+    DOM.cardFooterCat.textContent = card.categoryName;
 
     // TEMA DEĞİŞİMİ: Tamamen çekilen karta bağlı!
     setTheme(card.category);
 
     window.audio.playDrawCard();
 
-    // DOM Update
-    DOM.cardQuestionText.textContent = card.question;
-    DOM.cardFooterCat.textContent = card.categoryName;
-
-    // View Transition
-    DOM.cardPromptState.style.display = 'none';
-    DOM.cardContentState.classList.add('active');
-    DOM.gameActions.style.visibility = 'visible';
+    // 3D FLIP! 🎴
+    DOM.cardFlipper.classList.add('flipped');
     
-    // Animation
-    DOM.activeCard.classList.remove('card-slide-enter');
-    void DOM.activeCard.offsetWidth; // trigger reflow
-    DOM.activeCard.classList.add('card-slide-enter');
+    // Dönüş (600ms) biterken butonları görünür yap ve kilidi aç
+    setTimeout(() => {
+      DOM.gameActions.style.visibility = 'visible';
+      state.isAnimating = false;
+    }, 550);
   }
 
   function onAnswer() {
+    if (state.isAnimating) return;
     window.audio.playSwoosh();
     
     if (state.penalty.isActive) {
@@ -427,6 +437,7 @@
   }
 
   function onPass() {
+    if (state.isAnimating) return;
     window.audio.playAlert();
 
     if (state.gameMode === 'alcohol') {
@@ -449,11 +460,38 @@
   }
 
   function animateCardOut(callback) {
-    DOM.activeCard.classList.add('card-slide-exit');
+    if (state.isAnimating) return;
+    state.isAnimating = true;
+
+    // 1) Butonları anında gizle
+    DOM.gameActions.style.visibility = 'hidden';
+
+    // 2) Kartı yumuşak bir şekilde soldur (fade out)
+    DOM.cardFlipper.classList.add('is-changing');
+
+    // Fade out süresi (CSS opacity 0.25s) bittiğinde
     setTimeout(() => {
-      DOM.activeCard.classList.remove('card-slide-enter', 'card-slide-exit');
+      // 3) Görünmezken transition'ı kapat ve 0deg'ye sıfırla
+      DOM.cardFlipper.classList.add('no-transition');
+      DOM.cardFlipper.classList.remove('flipped');
+      
+      // 4) Sıradaki tura geç (DOM metinleri güncellenir, tema base'e döner)
       callback();
-    }, 300);
+      
+      // Reflow zorla ki 0deg transition'sız işlensin
+      void DOM.cardFlipper.offsetWidth;
+      
+      // 5) Bir sonraki frame'de transition'ı aç ve kartı yumuşakça geri getir (fade in)
+      requestAnimationFrame(() => {
+        DOM.cardFlipper.classList.remove('no-transition');
+        DOM.cardFlipper.classList.remove('is-changing');
+        
+        // Fade in (250ms) bitince yeni tıklamalara izin ver
+        setTimeout(() => {
+          state.isAnimating = false;
+        }, 250);
+      });
+    }, 250);
   }
 
   // ==========================================================================
@@ -475,7 +513,7 @@
     DOM.btnStartGame.addEventListener('click', startGame);
 
     // Game Events
-    DOM.activeCard.addEventListener('click', onCardClick);
+    DOM.cardFlipper.addEventListener('click', onCardClick);
     DOM.btnAnswer.addEventListener('click', onAnswer);
     DOM.btnPass.addEventListener('click', onPass);
 
