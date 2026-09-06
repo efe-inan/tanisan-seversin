@@ -525,7 +525,8 @@ body::before {
   pointer-events: none;
 }
 /* Transition'ı anında sıfırlamak için */
-.card-flipper.no-transition {
+.card-flipper.no-transition,
+.card-flipper.no-transition * {
   transition: none !important;
 }
 
@@ -534,8 +535,8 @@ body::before {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
   border-radius: var(--radius-card);
   box-shadow: 0 20px 40px rgba(0,0,0,0.45);
   user-select: none;
@@ -561,8 +562,9 @@ body::before {
   justify-content: center;
   align-items: center;
   padding: 32px 24px;
-  transform: rotateY(0deg) translateZ(1px);
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transform: rotateY(0deg);
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
 }
 
 /* Decorative card front pattern */
@@ -594,10 +596,9 @@ body::before {
   padding: 12.5% 12% 11% 12%;
   display: flex;
   flex-direction: column;
-  transform: rotateY(180deg) translateZ(1px);
-  backface-visibility: visible;
-  -webkit-backface-visibility: visible;
-  transition: opacity 0.2s ease, visibility 0.2s ease;
+  transform: rotateY(180deg);
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
 }
 
 /* Category Backgrounds mapped to .card-back */
@@ -609,16 +610,13 @@ body.theme-deep .card-back       { background-image: url('tasarim/en-gizli-sirla
 body.theme-dirty .card-back      { background-image: url('tasarim/dirty.png'); }
 body.theme-nsfw .card-back       { background-image: url('tasarim/nsfw.png'); }
 
-/* 3D Flip Face Culling — Tarayıcı ters yazı ve GPU render bug'larını önler */
-.card-flipper.flipped .card-front {
-  opacity: 0;
+/* 3D Flip Face Culling — Flipped değilken arka yüz anında gizlenir, ters yazı bug'ı oluşamaz */
+.card-flipper:not(.flipped) .card-back {
   visibility: hidden;
   pointer-events: none;
 }
 
-.card-flipper:not(.flipped) .card-back {
-  opacity: 0;
-  visibility: hidden;
+.card-flipper.flipped .card-front {
   pointer-events: none;
 }
 

@@ -382,6 +382,8 @@
 
     setTheme(null); // Kart kapanınca base temaya dön
 
+    DOM.cardQuestionText.textContent = '';
+    DOM.cardFooterCat.textContent = '';
     DOM.gameActions.style.visibility = 'hidden';
 
     if (state.penalty.isActive) {
