@@ -400,6 +400,23 @@
     }
   }
 
+  function formatQuestion(questionInput) {
+    if (!questionInput) return '';
+    let questionText = questionInput;
+    if (typeof questionInput === 'object' && questionInput !== null) {
+      questionText = (state.players.length === 2) ? questionInput.duo : questionInput.group;
+    }
+    if (!questionText || typeof questionText !== 'string' || !questionText.includes('{target}')) {
+      return questionText || '';
+    }
+    const otherPlayers = state.players.filter((_, idx) => idx !== state.currentPlayerIndex);
+    if (otherPlayers.length === 0) {
+      return questionText.replace(/\{target\}/g, 'karşındaki kişi');
+    }
+    const randomTarget = otherPlayers[Math.floor(Math.random() * otherPlayers.length)];
+    return questionText.replace(/\{target\}/g, randomTarget);
+  }
+
   function onCardClick() {
     if (state.isCardDrawn || state.isAnimating) return; // Kart açıkken veya animasyondayken tıklama yok sayılır
 
@@ -416,7 +433,7 @@
     if (DOM.cardBack) DOM.cardBack.style.display = '';
 
     // DOM Update — populate the back face
-    DOM.cardQuestionText.textContent = card.question;
+    DOM.cardQuestionText.textContent = formatQuestion(card.question);
     DOM.cardFooterCat.textContent = card.categoryName;
 
     // TEMA DEĞİŞİMİ: Tamamen çekilen karta bağlı!

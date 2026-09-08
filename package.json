@@ -1,0 +1,12 @@
+{
+  "name": "tanisan-seversin",
+  "version": "1.0.0",
+  "description": "Tanısan Seversin - Masa Oyunu",
+  "scripts": {
+    "dev": "npx --yes serve -l 3000",
+    "start": "npx --yes serve -l 3000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

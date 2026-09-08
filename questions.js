@@ -1,26 +1,27 @@
 // ============================================================================
 // TANISAN SEVERSİN - SORU HAVUZU (QUESTIONS DATABASE)
-// 7 Kategori x 150+ Soru = Toplam 1050+ Özenle Hazırlanmış Soru
+// 2 Kişilik (Duo: 'benimle/ikimiz') ve Çoklu Oyuncu (Group: 'bu grupta/gruptan')
+// Akıllı Dinamik Uyarlanabilir Soru Seti
 // ============================================================================
 
 const CATEGORIES = {
-  icebreaker: {
-    id: 'icebreaker',
-    name: 'Yeni Tanışma',
-    icon: '🧊',
-    tag: 'Buz Kırıcı',
-    description: 'Hafif, eğlenceli ve keyifli tanışma soruları',
-    theme: {
-      primary: '#06b6d4',
-      primaryDark: '#0891b2',
-      glow: 'rgba(6, 182, 212, 0.35)',
-      bgGradient: 'radial-gradient(circle at 50% 20%, #0e3a47 0%, #061820 100%)',
-      cardBg: 'rgba(12, 38, 48, 0.85)',
-      badgeBg: 'rgba(6, 182, 212, 0.15)',
-      badgeBorder: 'rgba(6, 182, 212, 0.4)',
-      textColor: '#e0f2fe'
+  "icebreaker": {
+    "id": "icebreaker",
+    "name": "Yeni Tanışma",
+    "icon": "🧊",
+    "tag": "Buz Kırıcı",
+    "description": "Hafif, eğlenceli ve keyifli tanışma soruları",
+    "theme": {
+      "primary": "#06b6d4",
+      "primaryDark": "#0891b2",
+      "glow": "rgba(6, 182, 212, 0.35)",
+      "bgGradient": "radial-gradient(circle at 50% 20%, #0e3a47 0%, #061820 100%)",
+      "cardBg": "rgba(12, 38, 48, 0.85)",
+      "badgeBg": "rgba(6, 182, 212, 0.15)",
+      "badgeBorder": "rgba(6, 182, 212, 0.4)",
+      "textColor": "#e0f2fe"
     },
-    questions: [
+    "questions": [
       "Hayatın boyunca yalnızca tek bir ülkeye seyahat etme hakkın olsaydı, nereyi seçerdin ve neden?",
       "Bugüne kadar tattığın en tuhaf ya da beklenmedik lezzet neydi?",
       "Sana sınırsız bütçeyle bir hobi edinme şansı verilseydi yarın neye başlardın?",
@@ -92,7 +93,7 @@ const CATEGORIES = {
       "Hayatında 'ikinci şansa' inanan biri misin?",
       "Bir kafeye girince oturma yeri seçerken nelere dikkat edersin?",
       "Çevrendeki insanların gözlemlediğin ve 'bunu neden yapıyorlar?' dediğin bir alışkanlık var mı?",
-      "Kendi geçmişine baktığında 'o dönem beni şekillendirdi' dediğin tek bir yıl hangisi?",
+      "Kendi geçmişine baktığında 'o dönem karakterimi en çok şekillendirdi' dediğin o tek yıl hangisi?",
       "En son ne zaman tamamen yabancı bir şeyi deneyip çok beğendiğin oldu?",
       "Bir şehirde sadece 24 saatin olsa ve o şehri hiç bilmesen ilk yapacağın şey ne?",
       "Seni bir kelimeyle tanımlayan ama sana göre eksik kalan o kelime nedir?",
@@ -140,383 +141,715 @@ const CATEGORIES = {
       "Bir konuda hiç hata yapmadan ustalaşabilseydin bu ne olurdu?",
       "Kendine baktığında gördüğün ve diğerlerinin görmediği tarafın nedir?",
       "Şu an sessize alman gereken bir iç sesin olsa o ses ne söylüyor olurdu?",
-      "Bu odada seninle tanışmış olmaktan en çok ne umut edersin?"
+      {
+        "duo": "Benimle tanışmış olmanın hayatına ne katmasını umut edersin?",
+        "group": "Bu masadaki insanlarla tanışmış olmanın hayatına ne katmasını umut edersin?"
+      }
     ]
   },
-
-  friends: {
-    id: 'friends',
-    name: 'Arkadaşlar Arası',
-    icon: '👬',
-    tag: 'Samimi & Dostluk',
-    description: 'Arkadaş grubunu daha derin tanıyıp bağları güçlendirecek sorular',
-    theme: {
-      primary: '#f59e0b',
-      primaryDark: '#d97706',
-      glow: 'rgba(245, 158, 11, 0.35)',
-      bgGradient: 'radial-gradient(circle at 50% 20%, #451a03 0%, #1c0a00 100%)',
-      cardBg: 'rgba(56, 25, 6, 0.85)',
-      badgeBg: 'rgba(245, 158, 11, 0.15)',
-      badgeBorder: 'rgba(245, 158, 11, 0.4)',
-      textColor: '#fef3c7'
+  "friends": {
+    "id": "friends",
+    "name": "Arkadaşlar Arası",
+    "icon": "👬",
+    "tag": "Samimi & Dostluk",
+    "description": "Arkadaş grubunu daha derin tanıyıp bağları güçlendirecek sorular",
+    "theme": {
+      "primary": "#f59e0b",
+      "primaryDark": "#d97706",
+      "glow": "rgba(245, 158, 11, 0.35)",
+      "bgGradient": "radial-gradient(circle at 50% 20%, #451a03 0%, #1c0a00 100%)",
+      "cardBg": "rgba(56, 25, 6, 0.85)",
+      "badgeBg": "rgba(245, 158, 11, 0.15)",
+      "badgeBorder": "rgba(245, 158, 11, 0.4)",
+      "textColor": "#fef3c7"
     },
-    questions: [
-      "Bu gruptaki insanlarla birlikteyken kendini en çok 'kendi gibi' hissettiğin an hangisiydi?",
-      "Benimle ya da bu gruptan biriyle yaşadığın ve asla unutamadığın en absürt anı nedir?",
-      "Eğer bir gün başın büyük bir belaya girse gruptan ilk kimi ararsın ve neden?",
-      "Bizim hakkımızda dışarıdan birine bahsederken en çok hangi özelliğimizle övünürsün?",
-      "Arkadaşlığımız boyunca bana söylemek isteyip de doğru zamanı bulamadığın bir şey var mı?",
-      "Grupta bir zombi istilası çıksa ilk kim hayatta kalır, ilk kim feda edilir?",
-      "Benim en tahammül etmekte zorlandığın ya da 'yine başladı' dediğin huyum ne?",
-      "Birlikte çıktığımız yolculuklar ya da planlar arasında senin için 1 numara hangisiydi?",
-      "Gruptaki herkesin bir ortak özelliği olsaydı bu ne olurdu?",
-      "Eğer bu gruptan biriyle bir şirket kuracak olsan kimi ortak seçerdin ve ne satardınız?",
-      "Benim hayatımda yaptığım en kötü veya en komik seçim sence neydi?",
-      "Zor bir dönemden geçerken bu gruptan aldığın en iyi destek neydi?",
-      "Grupta en çok kimin aşk hayatı kaotik ve kimin tavsiyelerine asla güvenilmez?",
-      "Aramızdaki bağın zayıflamasından hiç korktuğun bir dönem oldu mu?",
-      "Bana dışarıdan bakan birinin asla tahmin edemeyeceği bir özelliğimi söyler misin?",
-      "Eğer bir gün birimiz zengin olursa gruptan ilk kime ne almalı?",
-      "Benim hakkımda ilk tanıştığımızda düşündüğün ama sonradan değişen fikrin neydi?",
-      "Birlikte sabaha kadar oturup konuştuğumuz ve sana çok iyi gelen o geceyi hatırlıyor musun?",
-      "Grupta en çok kimin sır tutma becerisine güvenirsin?",
-      "Eğer benim yerimde bir günlüğüne yaşasaydın hayatımda ilk neyi değiştirirdin?",
-      "Beni bir dizi/film karakteriyle eşleştirsen bu kim olurdu?",
-      "Aramızdaki en komik veya en saçma kavga/tartışma ne yüzünden çıkmıştı?",
-      "Birbirimize verdiğimiz ama unuttuğumuz bir söz var mı?",
-      "Gruptaki herkes hakkında tek bir olumlu kelime söylemen gerekirse kim için ne dersin?",
-      "Sence aramızda yaşlanınca en huysuz dede/nine kim olacak?",
-      "Senin moralin çok bozukken seni en hızlı güldüren gruptan kimdir?",
-      "Hiç gruptan birini kıskandığın veya 'keşke ben de onun gibi olsam' dediğin bir an oldu mu?",
-      "Bizim arkadaşlık dinamiğimizi anlatan tek bir şarkı seçsen hangisi olurdu?",
-      "Bana sormak isteyip de kırılacağımdan korktuğun bir soru var mıydı?",
-      "Grupta en çok kime borç para verirken hiç düşünmezsin?",
-      "Eğer bir gün hepimiz farklı şehirlere/ülkelere dağılsak bağımızı ne korur?",
-      "Benim en çok hangi başarımı kutladığında gerçekten içten gurur duydun?",
-      "Gruptaki en iyi dert dinleyen kişi sence kim?",
-      "Birlikte yaptığımız en rezil ama şu an gülerek anlattığımız olay neydi?",
-      "Benim flört veya ilişki seçimlerim hakkında dürüst bir eleştiri yapsan ne derdin?",
-      "Gruptan kiminle 1 ay boyunca ıssız bir adada baş başa kalmaya katlanabilirsin?",
-      "Bana verdiğin ve sonradan 'keşke öyle demeseydim' dediğin bir tavsiye var mı?",
-      "Sence bu grupta duygularını en çok içine atan ve saklayan kim?",
-      "Senin gözünde bu arkadaş grubunun en vazgeçilmez kuralı veya yazılı olmayan yasası nedir?",
-      "Benim hangi yeteneğimin veya potansiyelimin yeterince farkında olmadığımı düşünüyorsun?",
-      "Birlikte yediğimiz en efsane yemek ya da gittiğimiz en güzel mekan hangisiydi?",
-      "Gruptan birinin düğününde en çok ağlayacak ve en çok dans edecek kişi kim olur?",
-      "Benimle ilgili öğrendiğinde en çok şaşırdığın gerçek neydi?",
-      "Birlikte bir suç işleyecek olsak (örneğin müze soygunu) plandaki rollerimiz ne olurdu?",
-      "Arkadaşlığımızda seni en çok mutlu eden küçük bir jest ya da an söyler misin?",
-      "Gruptaki kişilerden birer özellik çalma hakkın olsa kimden neyi alırdın?",
-      "Bana söylemek istediğin ama ertelediğin bir teşekkür var mı?",
-      "Sence biz 10 yıl sonra nerede, nasıl bir hayat yaşıyor olacağız?",
-      "Aramızdaki en 'mantık insanı' ve en 'duygu insanı' kim?",
-      "Benim hayatımdaki en büyük dönüm noktasına şahit olduğun an hangisiydi?",
-      "Grup içinde dedikodu yaparken en çok kimin adına endişeleniyoruz?",
-      "Birbirimize taktığımız en komik lakap ya da aramızdaki en komik içeriden şaka nedir?",
-      "Senin için 'gerçek dost' tanımını bu grupta en çok karşılayan davranış ne oldu?",
-      "Benimle yalnız vakit geçirmek ile kalabalık bir ortamda olmak arasındaki fark nedir?",
+    "questions": [
+      {
+        "duo": "Seninle birlikteyken kendini en çok 'kendi gibi' hissettiğin an hangisiydi?",
+        "group": "Bu gruptaki insanlarla birlikteyken kendini en çok 'kendi gibi' hissettiğin an hangisiydi?"
+      },
+      {
+        "duo": "Benimle yaşadığın ve asla unutamadığın en absürt anı nedir?",
+        "group": "Bu gruptan biriyle yaşadığın ve asla unutamadığın en absürt anı nedir?"
+      },
+      {
+        "duo": "Eğer bir gün başın büyük bir belaya girse beni hemen arar mıydın, neden?",
+        "group": "Eğer bir gün başın büyük bir belaya girse bu masadan ilk kimi ararsın ve neden?"
+      },
+      {
+        "duo": "İkimiz hakkında dışarıdan birine bahsederken en çok hangi özelliğimizle övünürsün?",
+        "group": "Bu arkadaş grubu hakkında dışarıdan birine bahsederken en çok hangi ortak özelliğimizle övünürsün?"
+      },
+      {
+        "duo": "Arkadaşlığımız boyunca bana söylemek isteyip de doğru zamanı bulamadığın bir şey var mı?",
+        "group": "Gruptan birini seç: Arkadaşlığınız boyunca ona söylemek isteyip de doğru zamanı bulamadığın bir şey var mı?"
+      },
+      {
+        "duo": "İkimiz bir zombi istilasına yakalansak ilk hangimiz hayatta kalır, hangimiz feda edilir?",
+        "group": "Bu grupta bir zombi istilası çıksa ilk kim hayatta kalır, ilk kim feda edilir?"
+      },
+      {
+        "duo": "Benim en tahammül etmekte zorlandığın ya da 'yine başladı' dediğin huyum ne?",
+        "group": "Gruptan birini seç: Onun en tahammül etmekte zorlandığın ya da 'yine başladı' dediğin huyu ne?"
+      },
+      {
+        "duo": "Birlikte çıktığımız yolculuklar ya da yaptığımız planlar arasında senin için 1 numara hangisiydi?",
+        "group": "Bu grupla çıktığın yolculuklar ya da yaptığınız planlar arasında senin için 1 numara hangisiydi?"
+      },
+      {
+        "duo": "İkimizin ortak bir süper gücü olsaydı bu sence ne olurdu?",
+        "group": "Gruptaki herkesin bir ortak süper gücü olsaydı bu ne olurdu?"
+      },
+      {
+        "duo": "İkimiz bir şirket kuracak olsak ne satardık ve aramızda iş bölümü nasıl olurdu?",
+        "group": "Eğer bu gruptan biriyle bir şirket kuracak olsan kimi ortak seçerdin ve ne satardınız?"
+      },
+      {
+        "duo": "Benim hayatımda yaptığım en kötü veya en komik seçim sence neydi?",
+        "group": "Gruptan birini seç: Onun hayatında yaptığı en kötü veya en komik seçim sence neydi?"
+      },
+      {
+        "duo": "Zor bir dönemden geçerken benden gördüğün en unutulmaz destek neydi?",
+        "group": "Zor bir dönemden geçerken bu gruptan veya bir arkadaşından aldığın en unutulmaz destek neydi?"
+      },
+      {
+        "duo": "Benim aşk hayatım hakkında en çok eleştirdiğin şey nedir?",
+        "group": "Grupta en çok kimin aşk hayatı kaotik ve kimin ilişki tavsiyelerine asla güvenilmez?"
+      },
+      {
+        "duo": "Aramızdaki bağın zayıflamasından hiç endişelendiğin bir dönem oldu mu?",
+        "group": "Bu gruptaki biriyle arandaki bağın zayıflamasından hiç endişelendiğin bir dönem oldu mu?"
+      },
+      {
+        "duo": "Bana dışarıdan bakan birinin asla tahmin edemeyeceği bir özelliğimi söyler misin?",
+        "group": "Gruptan birini seç: Dışarıdan bakan birinin onda asla tahmin edemeyeceği bir özelliğini söyle."
+      },
+      {
+        "duo": "Eğer bir gün aniden zengin olursan bana ilk ne hediye alırdın?",
+        "group": "Eğer bir gün birimiz aniden zengin olursa masadan ilk kime ne hediye almalı?"
+      },
+      {
+        "duo": "Benim hakkımda ilk tanıştığımızda düşündüğün ama sonradan tamamen değişen fikrin neydi?",
+        "group": "Gruptan birini seç: Onun hakkında ilk tanıştığınızda düşündüğün ama sonradan tamamen değişen fikrin neydi?"
+      },
+      {
+        "duo": "Benimle sabaha kadar oturup dertleştiğin ve sana çok iyi gelen o geceyi anlatır mısın?",
+        "group": "Gruptan biriyle sabaha kadar oturup dertleştiğin ve sana çok iyi gelen o geceyi anlatır mısın?"
+      },
+      {
+        "duo": "Benim sır tutma becerime 10 üzerinden kaç puan verirsin?",
+        "group": "Bu grupta en çok kimin sır tutma becerisine gözün kapalı güvenirsin?"
+      },
+      {
+        "duo": "Eğer benim yerimde bir günlüğüne yaşasaydın hayatımda ilk neyi değiştirirdin?",
+        "group": "Gruptan birini seç: Eğer onun yerinde bir günlüğüne yaşasaydın onun hayatında ilk neyi değiştirirdin?"
+      },
+      {
+        "duo": "Beni bir film ya da dizi karakteriyle eşleştirecek olsan bu kim olurdu?",
+        "group": "Solundaki kişiyi bir film ya da dizi karakteriyle eşleştirecek olsan bu kim olurdu?"
+      },
+      {
+        "duo": "Aramızdaki en komik veya en saçma tartışma ne yüzünden çıkmıştı?",
+        "group": "Bu gruptan biriyle yaşadığın en komik veya en saçma tartışma ne yüzünden çıkmıştı?"
+      },
+      {
+        "duo": "Bana verdiğin ama unuttuğun ya da ertelediğin bir söz var mı?",
+        "group": "Bu masadaki birine verdiğin ama unuttuğun ya da ertelediğin bir söz var mı?"
+      },
+      {
+        "duo": "Benim hakkımda tek bir pozitif kelime söylemen gerekirse ne dersin?",
+        "group": "Gruptaki herkes hakkında tek bir pozitif kelime söylemen gerekirse kim için ne dersin?"
+      },
+      {
+        "duo": "Sence ikimizden hangimiz yaşlanınca daha huysuz bir dede/nine olacak?",
+        "group": "Sence aramızda yaşlanınca en huysuz dede/nine kim olacak?"
+      },
+      {
+        "duo": "Moralin çok bozukken seni en hızlı güldüren huyum ya da taktiğim nedir?",
+        "group": "Senin moralin çok bozukken seni en hızlı güldüren gruptan kimdir?"
+      },
+      {
+        "duo": "Benim hangi yeteneğime ya da özelliğime gizliden gizliye gıpta ediyorsun?",
+        "group": "Hiç bu gruptan birini kıskandığın veya 'keşke onun gibi bir yeteneğim olsa' dediğin bir an oldu mu?"
+      },
+      {
+        "duo": "İkimizin arkadaşlık dinamiğini en iyi anlatan tek bir şarkı seçsen hangisi olurdu?",
+        "group": "Bu arkadaş grubunun ruhunu ve dinamiğini en iyi anlatan tek bir şarkı seçsen hangisi olurdu?"
+      },
+      {
+        "duo": "Bana sormak isteyip de kırılacağımdan çekindiğin bir soru var mıydı?",
+        "group": "Gruptan birini seç: Ona sormak isteyip de kırılmasından çekindiğin bir soru var mıydı?"
+      },
+      {
+        "duo": "Bana borç para verirken hiç tereddüt eder misin?",
+        "group": "Bu grupta en çok kime borç para verirken hiç düşünmezsin?"
+      },
+      {
+        "duo": "Eğer bir gün farklı şehirlere veya ülkelere dağılsak ikimizin bağını ne korur?",
+        "group": "Eğer bir gün hepimiz farklı şehirlere veya ülkelere dağılsak bu bağı ne korur?"
+      },
+      {
+        "duo": "Benim en çok hangi başarımı kutladığında içtenlikle gurur duydun?",
+        "group": "Gruptan birini seç: Onun en çok hangi başarısını kutladığında içtenlikle gurur duydun?"
+      },
+      {
+        "duo": "Bana dert anlatırken kendini ne kadar rahat ve güvende hissediyorsun?",
+        "group": "Gruptaki en iyi dert dinleyen ve insanı rahatlatan kişi sence kim?"
+      },
+      {
+        "duo": "İkimizin birlikte yaptığı en rezil ama şu an gülerek anlattığımız olay neydi?",
+        "group": "Bu gruptan biriyle yaptığınız en rezil ama şu an gülerek anlattığınız olay neydi?"
+      },
+      {
+        "duo": "Benim flört veya ilişki tercihlerim hakkında dürüst bir eleştiri yap.",
+        "group": "Gruptan birini seç: Onun flört veya ilişki tercihleri hakkında dürüst bir eleştiri yap."
+      },
+      {
+        "duo": "Benimle 1 ay boyunca ıssız bir dağ evinde baş başa kalmaya katlanabilir misin?",
+        "group": "Gruptan kiminle 1 ay boyunca ıssız bir dağ evinde baş başa kalmaya katlanabilirsin?"
+      },
+      {
+        "duo": "Bana verdiğin ve sonradan 'keşke öyle demeseydim' dediğin bir tavsiye var mı?",
+        "group": "Bu gruptan birine verdiğin ve sonradan 'keşke öyle demeseydim' dediğin bir tavsiye var mı?"
+      },
+      {
+        "duo": "Benim duygularımı ne kadar dışa vurduğumu ya da içime attığımı düşünüyorsun?",
+        "group": "Sence bu grupta duygularını en çok içine atan ve her şeyi içinde yaşayan kim?"
+      },
+      {
+        "duo": "Senin gözünde bu arkadaşlığın yazılı olmayan en katı kuralı nedir?",
+        "group": "Senin gözünde bu arkadaş grubunun yazılı olmayan en katı kuralı nedir?"
+      },
+      {
+        "duo": "Benim hangi yeteneğimin veya potansiyelimin yeterince farkında olmadığımı düşünüyorsun?",
+        "group": "Gruptan birini seç: Sence onun hangi yeteneğinin veya potansiyelinin yeterince farkında değil?"
+      },
+      {
+        "duo": "Birlikte yediğimiz en efsane yemek ya da gittiğimiz en güzel mekan hangisiydi?",
+        "group": "Bu grupla birlikte yediğiniz en efsane yemek ya da gittiğiniz en güzel mekan hangisiydi?"
+      },
+      {
+        "duo": "Benim düğünümde en çok ne yapacağını hayal ediyorsun: Ağlamak mı, dans etmek mi?",
+        "group": "Gruptan birinin düğününde en çok ağlayacak ve pistte en çılgınca dans edecek kişi kim olur?"
+      },
+      {
+        "duo": "Benimle ilgili öğrendiğinde seni en çok şaşırtan gerçek neydi?",
+        "group": "Gruptan birini seç: Onunla ilgili öğrendiğinde seni en çok şaşırtan gerçek neydi?"
+      },
+      {
+        "duo": "İkimiz büyük bir müze soygunu planlasak rollerimiz tam olarak ne olurdu?",
+        "group": "Bu grupla büyük bir müze soygunu planlasanız herkesin takımdaki rolü ne olurdu?"
+      },
+      {
+        "duo": "Benim senin için yaptığım ve seni en çok duygulandıran küçük jest neydi?",
+        "group": "Bu masadaki birinin senin için yaptığı ve seni en çok duygulandıran jest neydi?"
+      },
+      {
+        "duo": "Benden tek bir karakteristik özellik çalma hakkın olsa neyi alırdın?",
+        "group": "Gruptaki kişilerden birer karakteristik özellik çalma hakkın olsa kimden neyi alırdın?"
+      },
+      {
+        "duo": "Bana söylemek istediğin ama bugüne kadar ertelediğin içten bir teşekkür var mı?",
+        "group": "Gruptan birini seç: Ona söylemek istediğin ama bugüne kadar ertelediğin içten bir teşekkür var mı?"
+      },
+      {
+        "duo": "Sence ikimiz 10 yıl sonra nerede, nasıl bir hayat yaşıyor olacağız?",
+        "group": "Sence bu arkadaş grubu 10 yıl sonra nerede, nasıl bir hayat yaşıyor olacak?"
+      },
+      {
+        "duo": "İkimiz arasında sence hangimiz daha çok mantığıyla, hangimiz duygularıyla hareket eder?",
+        "group": "Aramızdaki en 'katı mantık insanı' ve en 'duygusal karar veren' kim?"
+      },
+      {
+        "duo": "Benim hayatımdaki en büyük dönüm noktasına şahit olduğun an hangisiydi?",
+        "group": "Gruptan birini seç: Onun hayatındaki en büyük dönüm noktasına şahit olduğun an hangisiydi?"
+      },
+      "Bu grupta dedikodu yaparken en çok kimin hayat kararları adına endişeleniyoruz?",
+      {
+        "duo": "Aramızda dönen en komik içeriden espri veya bana taktığın lakap nedir?",
+        "group": "Bu grupta takılan en komik lakap ya da aramızda dönen en komik içeriden espri nedir?"
+      },
+      "Senin için 'gerçek dost' tanımını bu arkadaşlıkta en çok hissettiren davranış ne oldu?",
+      {
+        "duo": "Benimle baş başa vakit geçirmek ile kalabalık bir ortamda olmak arasındaki fark nedir?",
+        "group": "Gruptan birini seç: Onunla baş başa vakit geçirmek ile kalabalık bir ortamda olmak arasındaki fark nedir?"
+      },
       "Sence bu grupta en çabuk gaza gelen ve çılgınca fikirler ortaya atan kim?",
-      "Bir gün anılarımızı anlatan bir kitap yazılsa başlığı ne olurdu?",
-      "Beni en çok neyin üzdüğünü ya da öfkelendirdiğini biliyor musun?",
-      "Gruptan kimin anne/babasıyla aran daha iyi?",
-      "Birbirimizi en son ne zaman sıkıca kucakladık ve o an ne hissettin?",
-      "Bana karşı hiç haksızlık yaptığını düşünüp sonradan pişman olduğun bir an var mı?",
-      "Sence grupta tarzını veya giyimini en çok beğendiğin kişi kim?",
-      "Benimle ilgili değiştirmemi ASLA istemeyeceğin en karakteristik huyum nedir?",
-      "Grupça yaptığımız ve gelenekselleşmesini istediğin bir aktivite var mı?",
-      "Birbirimizin hayatında olmasaydık sence şu an nasıl insanlar olurduk?",
-      "Şu an bu masada olan herkese içinden gelen en samimi cümleyi kurar mısın?",
-      "Benim hakkımda sosyal medyada paylaşmak isteyip de paylaşmadığın bir şey var mı?",
-      "Bu gruptaki en büyük sırrı bilen sen misin yoksa başkası mı?",
-      "Birlikte en uzun süre hiç konuşmadan oturduğumuz ve ne hissettiğin anı hatırlıyor musun?",
-      "Benim için yapabileceğin en büyük fedakarlık nedir?",
-      "Grupta kimin kariyer seçimi seni en çok şaşırtmıştı?",
-      "Bu arkadaşlık içinde en çok ne zaman 'şanslıyım' diyorsun?",
-      "Birimizle ilgili aklında taşıdığın bir soru var mı, şimdi sorabilirsin?",
-      "Gruptan birinin evine taşınmak zorunda kalsan kiminle en uzun süre geçinebilirdin?",
-      "Bana sorulmadan yaptığın en güzel iyilik hangisiydi?",
-      "Sence bu grubun ortak zayıflığı ne?",
-      "Birlikte plan yapıp en çok hangi seferinde planı iptal ettik?",
-      "Şu an bana söylediğinde kalbimi en çok ısıtacak cümle ne olurdu?",
-      "Bu grupta en çok kimi anlayamadığını ama sevmeye devam ettiğini itiraf et.",
-      "Birlikte yaptığımız ve sence değeri bilinmeyen küçük geleneklerimiz neler?",
-      "Benden beklediğin ama bir türlü söylemediğin bir şey var mı?",
-      "Gruptan kiminle en uzun süre küs kaldın ve o sürece nasıl baktın?",
-      "Şu an bu grubun enerjisini bir kelimeyle tanımlamak zorunda kalsan ne derdin?",
-      "Beni diğer arkadaşlarından ayıran en belirgin fark sence nedir?",
-      "Grupça kriz anında en çok kimin sakin kaldığını gözlemledin?",
-      "Birlikte kahkaha attığımız ve şu an bile düşününce güldüğün o an nedir?",
-      "Sence bu grup olmasaydı sen bugün kim olurdun?",
-      "Bana bakıp 'bu kişi büyük işler yapacak' dediğin bir an oldu mu?",
-      "Grupta kimin en fazla değiştiğini düşünüyorsun ve bu değişim iyi mi kötü mü?",
-      "Birlikte bir maceraya atılacak olsak nasıl bir ekip oluştururuz?",
-      "Bu arkadaşlıkta seni en çok büyüten deneyim hangisiydi?",
-      "Benim hakkımda içinde sakladığın nazik bir gözlemin var mı?",
-      "Grupta kimin varlığını en çok 'hafifletiyor' ve rahatlatıyor?",
-      "Birlikte geçirdiğimiz zamanın sonu geldiğinde genellikle ne hissedersin?",
-      "Bu masadaki kişilere gerçekten şükran duyan biri misin?",
-      "Şu an gözlerimi kapatsan ve sadece seslerden herkesi tanısan ilk kimi ayırt ederdin?",
-      "Birlikte bir ev kiralayıp yaşasaydık evin hangi bölümünü hemen sahiplenirdin?",
-      "Bu gruptaki herkese aynı soruyu soran biri sana hangi soruyu sorardı?",
-      "Şu an sadece bana söyleyebileceğin, gruba değil, bir şey var mı?"
+      "Bir gün bu arkadaşlığın maceralarını anlatan bir kitap yazılsa başlığı ne olurdu?",
+      {
+        "duo": "Beni hayatta en çok neyin öfkelendirdiğini ya da üzdüğünü biliyor musun?",
+        "group": "Sağındaki kişiye dön: Sence onu hayatta en çok ne öfkelendirir ya da üzer?"
+      },
+      "Benim ailemle veya ebeveynlerimle aran nasıl?",
+      {
+        "duo": "Bana en son ne zaman sımsıkı sarıldın ve o an ne hissettin?",
+        "group": "Bu gruptan birine en son ne zaman sımsıkı sarıldın ve o an ne hissettin?"
+      },
+      {
+        "duo": "Bana karşı hiç haksızlık yaptığını düşünüp sonradan vicdan azabı çektiğin oldu mu?",
+        "group": "Gruptan birine karşı hiç haksızlık yaptığını düşünüp sonradan vicdan azabı çektiğin oldu mu?"
+      },
+      "Sence bu ortamda giyim tarzını veya zevkini en çok beğendiğin kişi kim?",
+      {
+        "duo": "Bende değiştirmemi ASLA istemeyeceğin en karakteristik huyum nedir?",
+        "group": "Gruptan birini seç: Onda değiştirmesini ASLA istemeyeceğin en karakteristik huyu nedir?"
+      },
+      "Birlikte yaptığımız ve gelenekselleşmesini en çok istediğin aktivite nedir?",
+      {
+        "duo": "Ben hayatında hiç olmasaydım sence bugün nasıl bir insan olurdun?",
+        "group": "Bu arkadaş grubu hayatında hiç olmasaydı sence bugün nasıl bir insan olurdun?"
+      },
+      {
+        "duo": "Şu an bana içinden gelen en samimi, filtresiz cümleyi kurar mısın?",
+        "group": "Şu an bu masada oturan herkese içinden gelen en samimi, filtresiz cümleyi kurar mısın?"
+      },
+      {
+        "duo": "Benim hakkımda sosyal medyada paylaşmak isteyip de vazgeçtiğin bir fotoğraf var mı?",
+        "group": "Gruptan biri hakkında sosyal medyada paylaşmak isteyip de vazgeçtiğin bir fotoğraf var mı?"
+      },
+      "Benim hakkımda bildiğin en gizemli sırrı başkası da biliyor mu?",
+      {
+        "duo": "Benimle hiç konuşmadan saatlerce sessizce oturduğun huzurlu bir anı hatırlıyor musun?",
+        "group": "Gruptan biriyle hiç konuşmadan saatlerce sessizce oturduğun huzurlu bir anı hatırlıyor musun?"
+      },
+      {
+        "duo": "Benim için gözünü kırpmadan yapabileceğin en büyük fedakarlık nedir?",
+        "group": "Bu masadaki en yakın arkadaşın için gözünü kırpmadan yapabileceğin en büyük fedakarlık nedir?"
+      },
+      "Benim kariyer veya eğitim tercihim seni hiç şaşırtmış mıydı?",
+      "Bu arkadaşlığın içinde en çok hangi anlarda 'iyi ki varsın' diyorsun?",
+      {
+        "duo": "Bana dair aklında taşıdığın ve merak ettiğin o tek soruyu şimdi sor.",
+        "group": "Gruptan birini seç ve aklında taşıdığın merak ettiğin bir soruyu doğrudan ona sor."
+      },
+      "Benim evime taşınmak zorunda kalsan ne kadar süre sorunsuz geçinebilirdik?",
+      {
+        "duo": "Bana hiç hissettirmeden yaptığın en güzel iyilik neydi?",
+        "group": "Gruptan birine ona hiç hissettirmeden yaptığın en güzel iyilik neydi?"
+      },
+      {
+        "duo": "Sence ikimizin arkadaşlığındaki en belirgin ortak zayıflık nedir?",
+        "group": "Sence bu arkadaş grubunun en belirgin ortak zayıflığı nedir?"
+      },
+      {
+        "duo": "İkimiz planlayıp son anda iptal ettiğimiz en efsane buluşma hangisiydi?",
+        "group": "Bu grupla planlayıp son anda iptal edilen en efsane buluşma hangisiydi?"
+      },
+      {
+        "duo": "Gözlerimin içine bakarak kalbimi ısıtacak içten bir cümle söyle.",
+        "group": "{target} adlı oyuncunun gözlerinin içine bakarak kalbini ısıtacak içten bir cümle söyle."
+      },
+      "Davranışlarını en çok çözemediğin ama sevmeye devam ettiğin arkadaşın kim?",
+      {
+        "duo": "İkimizin yaptığı ve sence değeri bilinmeyen o küçük tatlı gelenekler neler?",
+        "group": "Bu grupla yaptığınız ve sence değeri bilinmeyen o küçük tatlı gelenekler neler?"
+      },
+      {
+        "duo": "Benden beklediğin ama bir türlü açıkça dile getirmediğin bir ilgi ya da davranış var mı?",
+        "group": "Gruptan birinden beklediğin ama bir türlü açıkça dile getirmediğin bir ilgi ya da davranış var mı?"
+      },
+      {
+        "duo": "Benimle en uzun süre kırgın veya küs kaldığın o süreci anlatır mısın?",
+        "group": "Gruptan biriyle en uzun süre kırgın veya küs kaldığın o süreci anlatır mısın?"
+      },
+      "Şu an bu masanın yaydığı enerjiyi tek bir kelimeyle tanımla.",
+      {
+        "duo": "Beni diğer tüm arkadaşlarından ayıran en belirgin fark nedir?",
+        "group": "Solundaki kişiye dön: Onu diğer tüm arkadaşlarından ayıran en belirgin fark nedir?"
+      },
+      "Kriz anında en sakin kalan ve mantıklı düşünen taraf hangimiz oluruz?",
+      {
+        "duo": "İkimizin birlikte kahkaha krizine girdiği ve şu an bile gülümseten o olay nedir?",
+        "group": "Bu grupla birlikte kahkaha krizine girdiğin ve şu an bile gülümseten o olay nedir?"
+      },
+      {
+        "duo": "Sence benimle olan bu dostluğun olmasaydı hayatında en çok neyin eksikliğini hissederdin?",
+        "group": "Sence bu masadaki dostluklar olmasaydı hayatında en çok neyin eksikliğini hissederdin?"
+      },
+      {
+        "duo": "Benim hakkımda 'bu insan kesinlikle büyük işler yapacak' dediğin an neydi?",
+        "group": "{target} adlı oyuncuya bakarak söyle: Onun hakkında 'bu insan kesinlikle büyük işler yapacak' dediğin an neydi?"
+      },
+      "Son yıllarda bende en çok hangi değişimi fark ettin ve bu değişim nasıl oldu?",
+      {
+        "duo": "İkimiz ıssız bir ormanda kaybolsak hangimiz hayatta kalmayı sağlar, hangimiz panikler?",
+        "group": "Bu grupla ıssız bir ormanda kaybolsanız kim hayatta kalmayı sağlar, kim panik yaratır?"
+      },
+      {
+        "duo": "Benimle olan bu arkadaşlık seni bir insan olarak en çok nasıl büyüttü ve olgunlaştırdı?",
+        "group": "Bu gruptaki arkadaşlıklar seni bir insan olarak en çok nasıl büyüttü ve olgunlaştırdı?"
+      },
+      {
+        "duo": "Benim hakkımda bugüne kadar dile getirmediğin takdir dolu bir gözlemini söyle.",
+        "group": "Sağındaki kişiye dön: Onun hakkında bugüne kadar dile getirmediğin takdir dolu bir gözlemini söyle."
+      },
+      "Ortamdaki gerginliği en hızlı dağıtan hareketim sence hangisi?",
+      {
+        "duo": "Benimle geçirdiğin güzel bir günün sonunda eve dönerken genellikle ne hissedersin?",
+        "group": "Bu grupla geçirdiğin güzel bir günün sonunda eve dönerken genellikle ne hissedersin?"
+      },
+      {
+        "duo": "Bana gerçekten içtenlikle teşekkür borçlu olduğunu hissettiğin bir an var mı?",
+        "group": "Bu masada oturan insanlara gerçekten içtenlikle teşekkür borçlu olduğun bir an var mı?"
+      },
+      "Gözlerini kapatsan ses tonumdan ve hangi favori kelimemden beni hemen tanırsın?",
+      {
+        "duo": "İkimiz aynı eve taşınsaydık kim hangi odayı kapar ve hangi ev işini asla yapmazdı?",
+        "group": "Bu grupla aynı eve taşınsaydınız kim hangi odayı kapar ve hangi ev işini asla yapmazdı?"
+      },
+      "Bana dürüstçe sormak ve cevabını almak istediğin o tek soru ne olurdu?",
+      {
+        "duo": "Şu an sadece benim kulağıma fısıldamak istediğin küçük ve tatlı bir sır söyle.",
+        "group": "Gruptan birini seç: Sadece onun kulağına fısıldamak istediğin küçük ve tatlı bir sır söyle."
+      }
     ]
   },
-
-  flirt: {
-    id: 'flirt',
-    name: 'Flört & İlk Buluşma',
-    icon: '💘',
-    tag: 'Romantik & Çekim',
-    description: 'İki insan arasındaki kıvılcımı tutuşturan, romantik ve merak uyandırıcı sorular',
-    theme: {
-      primary: '#ec4899',
-      primaryDark: '#db2777',
-      glow: 'rgba(236, 72, 153, 0.35)',
-      bgGradient: 'radial-gradient(circle at 50% 20%, #500724 0%, #1f020d 100%)',
-      cardBg: 'rgba(64, 8, 30, 0.85)',
-      badgeBg: 'rgba(236, 72, 153, 0.15)',
-      badgeBorder: 'rgba(236, 72, 153, 0.4)',
-      textColor: '#fce7f3'
+  "flirt": {
+    "id": "flirt",
+    "name": "Flört & İlk Buluşma",
+    "icon": "💘",
+    "tag": "Romantik & Çekim",
+    "description": "İki insan arasındaki kıvılcımı tutuşturan, romantik ve merak uyandırıcı sorular",
+    "theme": {
+      "primary": "#ec4899",
+      "primaryDark": "#db2777",
+      "glow": "rgba(236, 72, 153, 0.35)",
+      "bgGradient": "radial-gradient(circle at 50% 20%, #500724 0%, #1f020d 100%)",
+      "cardBg": "rgba(64, 8, 30, 0.85)",
+      "badgeBg": "rgba(236, 72, 153, 0.15)",
+      "badgeBorder": "rgba(236, 72, 153, 0.4)",
+      "textColor": "#fce7f3"
     },
-    questions: [
-      "Beni ilk gördüğün ya da ilk konuştuğumuz an aklından geçen ilk düşünce neydi?",
+    "questions": [
+      {
+        "duo": "Beni ilk gördüğün ya da ilk konuştuğumuz an aklından geçen ilk düşünce neydi?",
+        "group": "Masadan birini seç (veya karşındakine dön): Onu ilk gördüğün ya da ilk konuştuğunuz an aklından geçen ilk izlenim neydi?"
+      },
       "Bir insanda seni ilk 5 dakikada en çok etkileyen şey nedir: Ses tonu, bakışlar, espri anlayışı?",
       "Senin için 'mükemmel bir ilk randevu' senaryosu nasıl başlar ve nasıl biter?",
       "Aşkta kadere ve tesadüflere inanır mısın, yoksa her şey seçimlerden mi ibarettir?",
       "Bir ilişkide olmazsa olmaz dediğin, asla taviz veremeyeceğin 3 değer nedir?",
-      "Karşındaki insanın senden hoşlandığını en net nasıl anlarsın?",
+      "Karşındaki insanın senden gerçekten hoşlandığını en net nasıl anlarsın?",
       "Flört ederken cesur ve açık sözlü müsün yoksa ağırdan alıp karşı tarafı mı beklersin?",
-      "Bende dikkatini çeken en çekici ya da sempatik detay nedir?",
+      {
+        "duo": "Bende dikkatini çeken en sempatik veya çekici detay nedir?",
+        "group": "Masadan birini seç (veya karşındakine dön): Onda dikkatini çeken en sempatik veya çekici detay nedir?"
+      },
       "Sence bir ilişkide tutku mu daha önemlidir yoksa huzur ve güven mi?",
       "Aşkını gösterme dilin hangisidir: Sözler, hediyeler, fiziksel temas, kaliteli zaman, yardım etmek?",
-      "Hiç birine ilk görüşte aşık oldun mu yoksa tanıdıkça mı seversin?",
+      "Hiç birine ilk görüşte aşık oldun mu yoksa tanıdıkça mı kalbin ısınır?",
       "Senin kalbini çalmanın en kestirme ve garantili yolu nedir?",
       "Bir ilişkide en çok korktuğun şey nedir: Bağlanmak, terk edilmek, monotonlaşmak?",
       "Şu ana kadar yaptığın ya da sana yapılan en romantik jest neydi?",
-      "Göz teması kurduğumuzda ne hissediyorsun: Heyecan, merak, huzur?",
+      {
+        "duo": "Gözlerimin içine 5 saniye bak: O an içinde ne hissettin: Merak mı, heyecan mı, tebessüm mü?",
+        "group": "Masadan birini seç ve 5 saniye göz teması kur: O an içinde ne hissettin: Merak mı, heyecan mı, tebessüm mü?"
+      },
       "Bir erkekte/kadında 'red flag' olarak gördüğün ilk davranış nedir?",
       "Sence bir çiftin birlikte yapabileceği en eğlenceli ve bağ kurucu aktivite nedir?",
-      "Geçmiş ilişkilerinden öğrendiğin en büyük ilişki dersi ne oldu?",
+      "Geçmiş ilişkilerinden öğrendiğin en büyük hayat ve ilişki dersi ne oldu?",
       "Sabah sevgilinin yanında uyanıp ilk ne yapmak istersin?",
       "Karşındaki kişinin zekası ve mizah yeteneği senin için ne kadar çekici?",
-      "Birlikte yağmurlu bir gecede baş başa kalsak ne yapmak isterdin?",
+      {
+        "duo": "Benimle yağmurlu bir gecede baş başa kalsan ne yapmak isterdin?",
+        "group": "Hoşlandığın kişiyle yağmurlu bir gecede baş başa kalsan ne yapmak isterdin?"
+      },
       "Eski sevgililerinle arkadaş kalabilenlerden misin, yoksa tamamen silenlerden mi?",
-      "Beni tanımak için bana sorabileceğin tek bir derin soru sorma hakkın olsa ne sorardın?",
+      {
+        "duo": "Beni daha yakından tanımak için sorabileceğin tek bir soru hakkın olsa ne sorardın?",
+        "group": "Masadan birini seç: Onu daha yakından tanımak için sorabileceğin tek bir soru hakkın olsa ne sorardın?"
+      },
       "Bir ilişkide kıskançlık sence sevgi göstergesi midir yoksa özgüvensizlik mi?",
-      "Seninle spontane bir gece yarısı yolculuğuna çıksak nereye sürmek istersin?",
+      {
+        "duo": "Benimle plansız bir gece yarısı yolculuğuna çıksan nereye sürmek isterdin?",
+        "group": "Masadan birini seç: Onunla plansız bir gece yarısı yolculuğuna çıksan nereye sürmek isterdin?"
+      },
       "Bir insanda 'aura' ve çekim sence neyle oluşur?",
-      "Birlikte bir şarkı dinleyecek olsak ve bu anı ölümsüzleştirse hangi şarkıyı açardın?",
+      "Romantik bir anı ölümsüzleştirmek için çalacağın o kusursuz şarkı hangisi olurdu?",
       "Aşk acısı çekerken nasıl birine dönüşürsün: İçe kapanan mı, dışarı vuran mı?",
       "Sence karşı cinste en çekici giyim tarzı veya detay nedir?",
       "İlk buluşmada hesabı paylaşmak mı, bir tarafın ödemesi mi? Tavrın nedir?",
-      "Beni güldürmek için nasıl bir taktik uygulardın?",
+      {
+        "duo": "Beni güldürmek için nasıl bir taktik uygulardın?",
+        "group": "Masadan birini (veya hoşlandığın birini) güldürmek için nasıl bir taktik uygulardın?"
+      },
       "Bir ilişkide kendi alanına ve yalnız kalma ihtiyacına ne kadar önem verirsin?",
       "Hiç birine açılmaktan korkup duygularını içine gömdüğün oldu mu?",
       "Sence bir ilişkide heyecan ve flörtözlük yıllar geçse de korunabilir mi?",
-      "Birlikte bir hafta sonu tatiline kaçacak olsak nasıl bir yer hayal edersin?",
+      "Birlikte bir hafta sonu tatiline kaçacak olsak nasıl bir rota hayal edersin?",
       "Karşı tarafın hangi küçük jesti seni anında etkiler?",
       "Karakterinde aşık olunduğunda katlanılması en zor olan yanın nedir?",
       "Bir ilişkide en çok ne zaman kendini güvende ve değerli hissedersin?",
-      "Sence bizim enerjimiz ve uyumumuz 10 üzerinden kaç?",
-      "Bana şu an aklından geçen ama söylemeye çekindiğin tatlı bir iltifat et.",
+      {
+        "duo": "Sence ikimizin enerjisi ve uyumu 10 üzerinden kaç?",
+        "group": "Solundaki kişiye dön ve sor: 'Sence seninle enerjimiz ve uyumumuz 10 üzerinden kaç?'"
+      },
+      {
+        "duo": "Bana şu an aklından geçen tatlı ve dürüst bir iltifat et.",
+        "group": "{target} adlı oyuncuya dönerek söyle: Onda dikkatini çeken en sempatik veya tatlı özellik nedir?"
+      },
       "Flörtleşirken mesajlaşmayı mı seversin yoksa saatlerce telefonda konuşmayı mı?",
       "Bir ilişkide sırların olmalı mıdır yoksa tam şeffaflık mı gerekir?",
       "İlk öpüşmede mekan ve anın büyüsü senin için ne kadar önemlidir?",
-      "Benim hakkımda şu ana kadar öğrendiğin en ilginç veya tatlı şey ne?",
-      "Seninle bir gün boyunca telefonları kapatıp baş başa kalsak günümüz nasıl geçerdi?",
+      {
+        "duo": "Benim hakkımda bu akşam öğrendiğin en tatlı ya da ilginç detay nedir?",
+        "group": "Masadan birini seç: Onun hakkında bu akşam öğrendiğin en tatlı ya da ilginç detay nedir?"
+      },
+      {
+        "duo": "İkimiz tüm telefonları kapatıp 24 saat baş başa kalsak günümüz nasıl geçerdi?",
+        "group": "Hoşlandığın biriyle tüm telefonları kapatıp 24 saat baş başa kalsan gününüz nasıl geçerdi?"
+      },
       "Aşk için hayatında neleri feda edebileceğini düşünürsün?",
       "Sence zıt kutuplar mı birbirini çeker yoksa birbirine benzeyen insanlar mı?",
       "Bir ilişkide tartışmaların yapıcı olması için altın kuralın nedir?",
       "Şu an hayatında yeni bir aşka ve derin bir bağa ne kadar hazırsın?",
-      "Bana sarılsan nasıl bir sarılma olurdu: Sıcak ve uzun mu, enerjik mi?",
+      {
+        "duo": "Bana sarılsan nasıl bir sarılma olurdu: Sıcak ve uzun bir sarılma mı, enerjik ve samimi bir kucaklaşma mı?",
+        "group": "Karşındaki kişiye sarılsan nasıl bir sarılma olurdu: Sıcak ve uzun bir sarılma mı, enerjik ve samimi bir kucaklaşma mı?"
+      },
       "En çok hangi kelimeleri sevgilinin ağzından duymak içini eritir?",
-      "Gelecekteki partnerinde en çok hangi ebeveynlik ya da hayat arkadaşlığı özelliğini ararsın?",
-      "Birlikte mutfağa girip yemek yapsak nasıl bir kaos veya romantizm çıkar?",
-      "Bana baktığında gizemli bulduğun bir yanım var mı?",
-      "Aşkın sence bir ömrü var mıdır yoksa sevgiye mi evrilir?",
+      "Gelecekteki partnerinde en çok hangi hayat arkadaşlığı özelliğini ararsın?",
+      {
+        "duo": "İkimiz mutfağa girip yemek yapsak romantizm mi çıkar yoksa tatlı bir kaos mu?",
+        "group": "Biriyle mutfağa girip yemek yaparken romantizm mi çıkar yoksa tatlı bir kaos mu?"
+      },
+      {
+        "duo": "Bana baktığında sana gizemli ya da henüz keşfedilmemiş gelen tarafım nedir?",
+        "group": "Masadan birini seç: Onda sana gizemli ya da henüz keşfedilmemiş gelen tarafı nedir?"
+      },
+      "Aşkın sence bir ömrü var mıdır yoksa zamanla derin bir sevgiye mi evrilir?",
       "Biriyle buluşmaya hazırlanırken en çok neye özen gösterirsin: Koku, kıyafet, saç?",
       "Bugüne kadar yaşadığın en tatlı ya da en komik flört gafı neydi?",
       "Senin için 'o doğru kişi' hissini veren en belirgin işaret nedir?",
-      "Birlikte gün batımını izleyecek olsak nerede oturuyor olmak isterdin?",
+      "Biriyle gün batımını izleyecek olsan nerede oturuyor olmak isterdin?",
       "Duygusal olarak kırılgan olduğunu karşındakine ne zaman gösterirsin?",
-      "Benim ses tonum hakkında ne düşünüyorsun?",
+      {
+        "duo": "Benim ses tonum ve konuşma tarzım hakkında ne düşünüyorsun?",
+        "group": "Sağındaki kişiye dön: Onun ses tonu ve konuşma tarzı hakkında ne düşünüyorsun?"
+      },
       "İlişkide hediyeleşmek senin için ne ifade eder: Maneviyat mı, düşünülmüş olmak mı?",
-      "Birbirimize vereceğimiz en güzel söz ne olabilirdi?",
-      "Bu buluşmanın sonunda benden ne hatırlamak istersin?",
+      "Bir ilişkide iki insanın birbirine verebileceği en güzel söz ne olabilirdi?",
+      {
+        "duo": "Bu buluşmanın sonunda benden neyi hatırlamak istersin?",
+        "group": "Bu gecenin sonunda bu masadaki insanların senin hakkında neyi hatırlamasını istersin?"
+      },
       "Sence bir ilişkide 'doğru zamanlama' ne kadar belirleyicidir?",
       "Birine ilk mesajı atmak mı daha zor, yoksa ilk defa 'seni seviyorum' demek mi?",
-      "Bir partnerin seni en çok ne zaman 'bu insan benim için' hissettirir?",
+      "Bir partnerin seni en çok ne zaman 'bu insan benim için yaratılmış' hissettirir?",
       "Hayatında şu ana kadar kaç kez gerçek anlamda aşık oldun?",
       "Sence iyi bir ilişkinin en temel yapı taşı nedir?",
-      "Karşındaki kişinin gözlerine baktığında ne tür bir şey ararsın?",
+      "Karşındaki kişinin gözlerine baktığında ne tür bir duygu ararsın?",
       "İlk buluşmada konuşurken en çok hangi konunun açılmasından hoşlanırsın?",
-      "Şu an burada, bu anda, benden ne hissediyorsun?",
-      "Bir ilişkide en çok hangi anlar seni gerçekten sarsar?",
+      {
+        "duo": "Şu an gözlerime bak ve söyle: Benden tam olarak nasıl bir enerji hissediyorsun?",
+        "group": "Karşındaki kişiye bakarak söyle: Şu an onun enerjisinden ne hissediyorsun?"
+      },
+      "Bir ilişkide en çok hangi kırılma anları seni derinden sarsar?",
       "Biriyle bağ kurmanın önündeki en büyük engelini ne olarak görüyorsun?",
-      "Bir ilişkide sana göre 'romantizm' ne anlama gelir?",
-      "Şu an yanında olmak istediğin biri var mı?",
-      "Seninle ciddi olmak isteyen biri sana bunu nasıl göstermelidir?",
+      "Bir ilişkide sana göre 'romantizm' tam olarak ne anlama gelir?",
+      "Şu an hayatında yanında olmak istediğin özel biri var mı?",
+      "Seninle ciddi olmak isteyen biri sana bunu en net nasıl göstermelidir?",
       "Sevginin en güzel dile geldiği an sence nedir?",
       "Bir ilişki başlamadan önce sence ne kadar süre tanışmak gerekir?",
       "Karşındaki kişiyle arandaki kimyayı en çok hangi anlarda hissedersin?",
       "Seni en çok etkileyen his: Biri tarafından görülmek mi, anlaşılmak mı, arzulanmak mı?",
-      "Biri seni etkilemek istese neden yola çıkmalıdır?",
-      "Şu an hayatında biri olsaydı, bu akşam ne yapardınız?",
-      "Kendini en çok ne zaman sevilmeye layık hissedersin?",
+      "Biri seni etkilemek istese nereden yola çıkmalıdır?",
+      "Şu an hayatında özel biri olsaydı, bu akşam onunla ne yapıyor olurdun?",
+      "Kendini en çok ne zaman sevilmeye layık ve değerli hissedersin?",
       "Bir ilişkide 'kaliteli zaman' senin için ne anlama gelir?",
       "Şimdiye kadar yaptığın en cesur romantik hareket neydi?",
       "Birine yakın hissetmek için en çok neye ihtiyaç duyarsın?",
       "Aşkı anlatmak için bir renk seçsen hangisi olurdu?",
-      "İlk öpücük mi, ilk 'seni seviyorum' mu — hangisi daha değerlidir?",
-      "Şu an bu odada oturan birine sevgi mektubu yazsan ilk cümlen ne olurdu?",
+      "İlk öpücük mü, ilk 'seni seviyorum' mu — hangisi kalbinde daha değerlidir?",
+      {
+        "duo": "Bana gizli bir hayran mektubu yazacak olsan ilk cümlen ne olurdu?",
+        "group": "Bu masada oturan birine gizli bir hayran mektubu yazacak olsan ilk cümlen ne olurdu?"
+      },
       "Sevgi ve bağlılık arasındaki en önemli fark sence nedir?",
       "Seni ilk anda etkileyen ses tonu ve gülüş hakkında ne düşünüyorsun?",
       "Bir ilişkide 'sabırsızlıkla beklenen an' sence hangisi olmalıdır?",
-      "Karşındaki biri için içinde hissettiğin ama dile getirmediğin şey nedir?",
-      "Bu akşam birlikte geçirdiğimiz zamanı nasıl değerlendirirdin?"
+      {
+        "duo": "Benim hakkımda içinde hissettiğin ama bugüne kadar dile getirmediğin bir iltifat söyle.",
+        "group": "Masadan birine bak: Onun hakkında içinde hissettiğin ama bugüne kadar dile getirmediğin bir iltifat söyle."
+      },
+      {
+        "duo": "İkimizin bu akşam geçirdiği anı tek bir kelimeyle özetlesen bu ne olurdu?",
+        "group": "Bu masada birlikte geçirilen bu anı tek bir kelimeyle özetlesen bu ne olurdu?"
+      }
     ]
   },
-
-  family: {
-    id: 'family',
-    name: 'Aile',
-    icon: '👨‍👩‍👧',
-    tag: 'Sıcak & Ailevi',
-    description: 'Aile üyeleri, ebeveynler ve kardeşler için derin, saygılı ve nostaljik sorular',
-    theme: {
-      primary: '#d97706',
-      primaryDark: '#b45309',
-      glow: 'rgba(217, 119, 6, 0.35)',
-      bgGradient: 'radial-gradient(circle at 50% 20%, #3c1b0c 0%, #170902 100%)',
-      cardBg: 'rgba(53, 23, 10, 0.85)',
-      badgeBg: 'rgba(217, 119, 6, 0.15)',
-      badgeBorder: 'rgba(217, 119, 6, 0.4)',
-      textColor: '#ffedd5'
+  "family": {
+    "id": "family",
+    "name": "Aile",
+    "icon": "👨‍👩‍👧",
+    "tag": "Sıcak & Ailevi",
+    "description": "Aile üyeleri, ebeveynler ve kardeşler için derin, saygılı ve nostaljik sorular",
+    "theme": {
+      "primary": "#d97706",
+      "primaryDark": "#b45309",
+      "glow": "rgba(217, 119, 6, 0.35)",
+      "bgGradient": "radial-gradient(circle at 50% 20%, #3c1b0c 0%, #170902 100%)",
+      "cardBg": "rgba(53, 23, 10, 0.85)",
+      "badgeBg": "rgba(217, 119, 6, 0.15)",
+      "badgeBorder": "rgba(217, 119, 6, 0.4)",
+      "textColor": "#ffedd5"
     },
-    questions: [
-      "Çocukluğumuzdan ya da geçmişimizden aklında kalan en sıcak, en mutlu aile anısı hangisi?",
-      "Benimle ilgili bugüne kadar içinde biriktirdiğin ve gurur duyduğun bir başarı ya da davranış söyler misin?",
+    "questions": [
+      "Çocukluğundan ya da aile geçmişinden aklında kalan en sıcak, en mutlu anı hangisi?",
+      {
+        "duo": "Benimle ilgili içinde biriktirdiğin ve gurur duyduğun bir özelliğimi ya da davranışımı söyler misin?",
+        "group": "Masadan bir aile üyesini (veya birini) seç: Onunla ilgili içinde biriktirdiğin ve gurur duyduğun bir özelliği/davranışı söyle."
+      },
       "Ailemizde nesilden nesile aktarılmasını en çok istediğin güzel gelenek nedir?",
-      "Çocukken yaptığım ve seni hem çok korkutan hem de şu an güldüren bir yaramazlığım neydi?",
+      "Çocukken yaptığın ve aileni hem çok korkutan hem de şu an güldüren en büyük yaramazlığın neydi?",
       "Ailemizde değişmesini, daha modern ya da daha anlayışlı olmasını dilediğin bir kural var mı?",
-      "Benim karakterimin hangi özelliğini anneye, hangisini babaya benzetiyorsun?",
+      "Kendi karakterinin hangi özelliğini anneye, hangisini babaya daha çok benzetiyorsun?",
       "Zor zamanlarımızda ailemizin kenetlenip atlattığı ve seni duygulandıran bir anı var mı?",
-      "Büyürken sana yeterince söyleyemediğim ama hak ettiğin bir teşekkür var mı?",
+      "Büyürken ailene ya da büyüklerine yeterince söyleyemediğin ama hak ettikleri bir teşekkür var mı?",
       "Aile sofralarımız dendiğinde aklına gelen ilk yemek ve o masadaki kahkaha nedir?",
-      "Benim geleceğimle ilgili en büyük hayalin ve temennin nedir?",
+      {
+        "duo": "Benim geleceğimle ilgili en büyük hayalin ve temennin nedir?",
+        "group": "Masadan birini seç: Onun geleceğiyle ilgili en büyük hayalin ve temennin nedir?"
+      },
       "Geçmişe dönebilseydin aile olarak birlikte daha fazla ne yapmayı isterdin?",
-      "Bende görüp 'tıpkı bana çekmiş' dediğin bir alışkanlığın ya da huyun var mı?",
-      "Bana verdiğin ve hayatım boyunca bana rehberlik ettiğine inandığın en değerli hayat dersi nedir?",
-      "Hiç bana hissettirmemeye çalıştığın ama ailemiz için büyük fedakarlık yaptığın bir olay oldu mu?",
-      "Çocukluğumda benimle geçirdiğin en keyifli gün hangisiydi?",
+      "Ailende görüp 'tıpkı bana çekmiş' ya da 'tıpkı ona çekmişim' dediğin bir alışkanlık veya huy var mı?",
+      "Ailenden aldığın ve hayatın boyunca sana rehberlik ettiğine inandığın en değerli hayat dersi nedir?",
+      "Ailen için yaptığın ya da ailenin senin için yaptığı en büyük fedakarlık neydi?",
+      "Çocukluğunda ailenle geçirdiğin en keyifli, en unutulmaz gün hangisiydi?",
       "Ailemizin en bilge ve her konuda danışılacak kişisi sence kim?",
-      "Benim bir kararımı başlangıçta onaylamayıp sonradan 'iyi ki yapmış' dediğin oldu mu?",
+      "Ailenin başlangıçta onaylamayıp sonradan 'iyi ki yapmışsın' dediği bir başarın veya kararın oldu mu?",
       "Bayram sabahları ya da özel günlerdeki o eski telaşı özlüyor musun? En çok nesi aklında?",
-      "Beni büyütürken en çok zorlandığın ve en çok keyif aldığın dönem hangisiydi?",
-      "Birbirimize daha sık söylememiz gereken o cümle sence nedir?",
-      "Kendi anne-babanla olan ilişkine kıyasla benimle olan ilişkinde neyi farklı yapmaya çalıştın?",
-      "Benim hiç bilmediğim, ailenin geçmişine dair ilginç ya da komik bir aile hikayesi anlatır mısın?",
-      "Bende en çok hayran olduğun ve senin sahip olmak isteyeceğin kişisel güç nedir?",
+      "Sence ailede çocuk yetiştirirken ya da bir gence rehberlik ederken yaşanan en zorlayıcı dönem hangisi?",
+      "Aile içinde birbirimize çok daha sık söylememiz gereken o cümle sence nedir?",
+      "Kendi anne-babanın çocuk yetiştirme tarzıyla kıyaslandığında kendi hayatında neyi farklı yapıyorsun/yapardın?",
+      "Ailenin geçmişine dair duyduğun en ilginç, şaşırtıcı ya da komik hikaye nedir?",
+      {
+        "duo": "Bende en çok hayran olduğun ve gıpta ettiğin kişisel güç nedir?",
+        "group": "Masadan birini seç: Onda en çok hayran olduğun ve gıpta ettiğin kişisel güç nedir?"
+      },
       "Ailemizde en çok kimin esprilerine gülünür ve masanın neşesi kimdir?",
-      "Hakkımda endişelendiğin ama artık kendi ayaklarımın üzerinde durduğumu gördüğün konu neydi?",
-      "Birlikte çıktığımız o eski tatillerden aklında kalan en canlı kare nedir?",
-      "Benim sana hediye ettiğim ve sakladığın en manevi eşya hangisi?",
-      "Bana kırıldığın ama 'o daha genç/çocuk' deyip içine attığın bir an oldu mu?",
+      "Kendi ayakların üzerinde tek başına durabildiğini ailene ve kendine ilk ne zaman kanıtladın?",
+      "Ailece çıktığınız o eski tatillerden aklında kalan en canlı ve nostaljik kare nedir?",
+      "Ailenden birinin sana hediye ettiği ve gözün gibi sakladığın en manevi eşya hangisi?",
+      "Aileden birine kırıldığın ama 'o daha genç/çocuk' ya da 'o benim büyüğüm' deyip içine attığın bir an oldu mu?",
       "Bizim ailemizi diğer ailelerden ayıran en belirgin ve güzel fark nedir?",
-      "Gelecekte kendi kuracağım aileye bu yuvadan taşımamı istediğin en temel değer nedir?",
+      "Geleceğe ve sonraki nesillere bu aileden taşınmasını en çok istediğin temel değer nedir?",
       "Senin gençlik yıllarında hayal ettiğin hayatla şu anki hayatın arasında en tatlı fark ne?",
-      "Birlikte sustuğumuzda bile huzur bulduğumuz anları hissedebiliyor musun?",
-      "Benim hakkımda başkalarına anlatırken gözlerinin parlamasına sebep olan şey nedir?",
+      "Bu masadaki aile üyeleriyle birlikte sustuğunuzda bile o huzurlu bağı hissedebiliyor musun?",
+      {
+        "duo": "Benim hakkımda başkalarına anlatırken gözlerinin parlamasına sebep olan özelliğim nedir?",
+        "group": "Masadan birini seç: Onun hakkında başkalarına anlatırken gözlerinin parlamasına sebep olan başarı/özellik nedir?"
+      },
       "Eski fotoğraf albümlerine baktığında seni en çok duygulandıran fotoğraf hangisi?",
-      "Bana karşı hiç haksız yere kızdığını düşünüp sonradan vicdan azabı çektiğin oldu mu?",
+      "Ailenden birine haksız yere öfkelendiğini düşünüp sonradan vicdan azabı çektiğin oldu mu?",
       "Evimizde her zaman çalmasını istediğin o nostaljik şarkı hangisi?",
-      "Benden öğrenip kendi hayatına kattığın küçük bir bakış açısı ya da yeni şey var mı?",
+      {
+        "duo": "Benden öğrenip kendi hayatına kattığın küçük bir bakış açısı veya alışkanlık var mı?",
+        "group": "Masadan birini seç: Ondan öğrenip kendi hayatına kattığın küçük bir bakış açısı veya alışkanlık var mı?"
+      },
       "Kardeşler/aile bireyleri arasındaki dayanışmayı en güçlü hissettiğin gün neydi?",
-      "Kendi çocukluğunla benim çocukluğumu kıyasladığında en çok neye imreniyorsun?",
-      "Bana sarıldığında kalbinden geçen o saf duyguyu tek kelimeyle nasıl tarif edersin?",
+      "Kendi çocukluğunla şimdiki gençlerin çocukluğunu kıyasladığında en çok neye imreniyorsun?",
+      "Ailene sımsıkı sarıldığında hissettiğin o saf güven duygusunu tek kelimeyle anlat.",
       "Ailemizin büyüklerinden duyduğun ve kulağına küpe olan bir atasözü/nasihat var mı?",
-      "Birlikte hiç denemediğimiz ama seninle baş başa yapmak istediğim bir aktivite nedir?",
-      "Hangi yemeği yaptığımda ya da birlikte yediğimizde sana yuvada olduğunu hissettiriyor?",
-      "Benim hangi yaş dönemime geri dönüp bana bir kez daha sarılmak isterdin?",
+      "Ailenle bugüne kadar hiç denemediğin ama birlikte mutlaka yapmak istediğin bir aktivite nedir?",
+      "Hangi yemek piştiğinde ya da kokusunu duyduğunda sana anında gerçek bir yuvada olduğunu hissettiriyor?",
+      "Kendi çocukluğunun hangi yaşına geri dönüp o küçük çocuğa sımsıkı sarılmak isterdin?",
       "Evdeki en unutulmaz bayram ya da yılbaşı kutlamamız hangisiydi?",
-      "Bana güven duyduğun en belirgin an hangisiydi?",
-      "Kendi hayatında 'iyi ki bu aileyi kurmuşum' dediğin o dönüm noktası neydi?",
-      "Benden gizlediğin, beni üzmemek için tek başına göğüslediğin bir zorluk oldu mu?",
-      "Benimle gurur duyduğun son olayı anlatır mısın?",
-      "Birbirimizi anlamakta en çok zorlandığımız kuşak farkı konusu nedir?",
-      "Birlikte uzun bir araba yolculuğu yapsak nereye gitmek ve ne konuşmak isterdin?",
-      "Ailemizin 'kahramanı' kimdir ve neden?",
-      "Bana verebileceğin, ileride kendi çocuklarıma anlatacağım altın değerinde bir öğüt nedir?",
+      "Ailenden birine gözün kapalı güvendiğini hissettiğin en belirgin an hangisiydi?",
+      "Kendi hayatında 'iyi ki bu aileyi kurmuşum / bu ailenin parçasıyım' dediğin o dönüm noktası neydi?",
+      "Ailenden gizlediğin, onları üzmemek için tek başına göğüslediğin bir zorluk oldu mu?",
+      "Ailenin seninle gurur duyduğunu en derinden hissettiğin son olay neydi?",
+      "Aile içinde birbirimizi anlamakta en çok zorlandığımız kuşak farkı konusu nedir?",
+      "Ailece uzun bir araba yolculuğu yapsanız nereye gitmek ve ne konuşmak isterdin?",
+      "Ailemizin gerçek 'gizli kahramanı' kimdir ve neden?",
+      "İleride çocuklarına veya gençlere anlatacağın altın değerinde bir hayat öğüdü nedir?",
       "Evimizde yankılanan en komik kahkaha anını hatırlıyor musun?",
       "Senin hayatındaki en büyük fedakarlık kimin içindi?",
-      "Benim hangi alışkanlığımın sana tamamen benden geçtiğini düşünüyorsun?",
-      "Birlikte geçirdiğimiz zamanın değerini en çok ne zaman anladın?",
-      "Bana olan sevgini kelimelere döksen bu mektubun ilk cümlesi ne olurdu?",
-      "Hangi konuda bana gözün kapalı güvenirsin?",
+      {
+        "duo": "Bende gördüğün hangi alışkanlığın doğrudan bu aileden bana geçtiğini düşünüyorsun?",
+        "group": "Masadan birini seç: Onda gördüğün hangi alışkanlığın doğrudan bu aileden geçtiğini düşünüyorsun?"
+      },
+      "Ailece bir arada geçirilen zamanın değerini en çok ne zaman fark ettin?",
+      "Ailene olan sevgini ve bağlılığını bir mektuba döksen ilk cümlen ne olurdu?",
+      {
+        "duo": "Hangi konuda bana gözün kapalı güvenirsin?",
+        "group": "Masadan birini seç: Hangi konuda ona gözün kapalı güvenirsin?"
+      },
       "Ailemizde herkesin bildiği ama kimsenin konuşmadığı tatlı bir sır var mı?",
-      "Bana baktığında gelecekte beni nerede ve nasıl mutlu görüyorsun?",
+      {
+        "duo": "10 yıl sonra beni nerede, nasıl bir hayatın içinde mutlu görüyorsun?",
+        "group": "Masadan birini seç: 10 yıl sonra onu nerede, nasıl bir hayatın içinde mutlu görüyorsun?"
+      },
       "Şu an bu masada olduğumuz için şükrettiğin en büyük sebep nedir?",
-      "Seni ne kadar çok sevdiğimi ve takdir ettiğimi gerçekten hissedebiliyor musun?",
+      "Ailene olan sevgini ve takdirini günlük hayatta yeterince hissettirebiliyor musun?",
       "Ailemizin hikayesini bir roman olarak yazsak başlığı ne olurdu?",
       "Bir akrabanın senin için söylediği ve hâlâ içini ısıtan bir cümle var mı?",
-      "Büyüdüğüm ev denince sana gelen ilk ses hangisi?",
-      "Seninle en çok hangi konuda farklı düşünüyoruz ve bu fark bize ne öğretti?",
-      "Aile olarak birlikte gülmekten kıvrandığımız son anı hatırlıyor musun?",
-      "Bana söylemek istediğin ama 'zamanı değil' deyip beklediğin bir şey var mı?",
-      "Benim küçüklük dönemine ait hatırladığın en sevimli anın neydi?",
-      "Sence ailemizin en büyük gücü nedir?",
-      "Hayatındaki en zor dönemde benden gördüğün desteği nasıl değerlendiriyorsun?",
-      "Beni dışarıda birileriyle tanıştırırken nasıl tarif edersin?",
-      "Birlikte oturup hiç ağlamadığımız bir film var mı, izleyelim mi?",
-      "Beni bir çocukken çeken fotoğrafa baksan aklına ne gelir?",
+      "Büyüdüğün ev denince kulağına gelen ilk ses veya burnuna gelen ilk koku nedir?",
+      "Ailenle en çok hangi konuda fikir ayrılığı yaşarsın ve bu fark sana ne öğretti?",
+      "Aile olarak birlikte gülmekten yerlere yattığınız son anı hatırlıyor musun?",
+      "Ailene söylemek istediğin ama 'henüz zamanı değil' diyerek beklettiğin bir düşünce var mı?",
+      "Kendi küçüklüğüne dair evde hâlâ anlatılan en sevimli ya da komik anı nedir?",
+      "Sence bu ailenin en büyük gücü ve dayanışma kaynağı nedir?",
+      "Hayatındaki en zor dönemde ailenden gördüğün desteği nasıl değerlendiriyorsun?",
+      {
+        "duo": "Beni dışarıda tanımayan birilerine anlatırken nasıl tarif edersin?",
+        "group": "Masadan birini seç: Onu dışarıda tanımayan birine anlatırken nasıl tarif ederdin?"
+      },
+      "Ailece oturup birlikte ağladığınız veya çok duygulandığınız bir anı hatırlıyor musun?",
+      "Eski bir çocukluk fotoğrafına baktığında aklından geçen ilk his nedir?",
       "Gelecekte ailemiz nasıl bir yer olmalı?",
-      "Seni en iyi tanıdığımı sandığım anda yanılmış olduğumu hissettiren an neydi?",
-      "Yaşlılığında seni en çok kimin bakacağını düşünüyorsun?",
+      "Ailenden birini çok iyi tanıdığını sandığın halde seni çok şaşırtan bir an oldu mu?",
+      "Yaşlandığında ailenden en çok kimin sana benzeyeceğini düşünüyorsun?",
       "Bizim ailemizin simgesi ya da sembolü ne olurdu?",
-      "Birlikte en son ne zaman gerçekten derin bir sohbet ettik?",
-      "Benden öğrenmek istediğin ama sormaktan çekindiğin bir şey var mı?",
-      "Sana en çok benzeyen aile üyesi bence kimim?",
-      "Ailemizde sessiz kalan ama her şeyi gören o kişi kim?",
-      "Benden hiç beklediğin ama gerçekleşmemiş bir şey var mı?",
-      "Seni dinlediğimi ne zaman en çok hissediyorsun?",
-      "Gelecekte torunlarına bizi nasıl anlatırsın?",
-      "Bana baktığında hangimizi görüyorsun — çocuğunu mu, arkadaşını mı?",
-      "Evimizin en özel ve değerli köşesi sence neresidir?",
-      "Şu an birlikte burada olmak nasıl bir his veriyor sana?"
+      "Ailece en son ne zaman gerçekten derin ve kalpten bir sohbet ettiniz?",
+      "Ailenden birine her zaman sormak istediğin ama çekindiğin bir soru var mı?",
+      "Karakter ve mizaç olarak ailende sana en çok benzeyen kişi kim?",
+      "Ailemizde sessiz kalan ama her şeyi en net gören o bilge kişi kim?",
+      "Ailenin senden beklediği ama senin kendi yolunu çizdiğin bir hayat tercihin oldu mu?",
+      "Ailende gerçekten dinlendiğini ve anlaşıldığını en çok ne zaman hissediyorsun?",
+      "Gelecekte torunlarına ya da gençlere bu aileyi ve bu günleri nasıl anlatırsın?",
+      "Ailenle arandaki bağı nasıl tanımlarsın: Klasik aile bağı mı, derin bir dostluk mu?",
+      "Evimizin en özel, en hatıra dolu köşesi sence neresidir?",
+      "Şu an bu masada bir arada olmak nasıl bir huzur ve his veriyor sana?"
     ]
   },
-
-  dirty: {
-    id: 'dirty',
-    name: 'Dirty',
-    icon: '🔥',
-    tag: '18+ Flörtöz Gerilim',
-    description: 'Flörtöz, çekici, tutkulu ve cinsel gerilimi yükselten cesur sorular',
-    theme: {
-      primary: '#e11d48',
-      primaryDark: '#be123c',
-      glow: 'rgba(225, 29, 72, 0.35)',
-      bgGradient: 'radial-gradient(circle at 50% 20%, #380613 0%, #130105 100%)',
-      cardBg: 'rgba(51, 6, 17, 0.85)',
-      badgeBg: 'rgba(225, 29, 72, 0.15)',
-      badgeBorder: 'rgba(225, 29, 72, 0.4)',
-      textColor: '#ffe4e6'
+  "dirty": {
+    "id": "dirty",
+    "name": "Dirty",
+    "icon": "🔥",
+    "tag": "18+ Flörtöz Gerilim",
+    "description": "Flörtöz, çekici, tutkulu ve cinsel gerilimi yükselten cesur sorular",
+    "theme": {
+      "primary": "#e11d48",
+      "primaryDark": "#be123c",
+      "glow": "rgba(225, 29, 72, 0.35)",
+      "bgGradient": "radial-gradient(circle at 50% 20%, #380613 0%, #130105 100%)",
+      "cardBg": "rgba(51, 6, 17, 0.85)",
+      "badgeBg": "rgba(225, 29, 72, 0.15)",
+      "badgeBorder": "rgba(225, 29, 72, 0.4)",
+      "textColor": "#ffe4e6"
     },
-    questions: [
+    "questions": [
       "Karşındaki insanda seni fiziksel olarak ilk saniyede en çok çarpan detay nedir: Dudaklar, boyun, eller, gözler?",
       "Bugüne kadar yaptığın en cesur, nabız yükselten flört hamlen neydi?",
       "Bir insanda 'dayanılmaz bir çekim' hissettiğinde vücudunda oluşan ilk fiziksel tepki nedir?",
       "Sence fısıltıyla söylenen kışkırtıcı bir söz mü, yoksa uzun ve sessiz bir göz teması mı daha etkilidir?",
       "Hiç uygunsuz ya da yasak sayılabilecek bir ortamda dayanılmaz bir arzu hissettin mi?",
       "Ten uyumu senin için bir ilişkinin yüzde kaçını oluşturur?",
-      "Bende en çok hangi bölgeye ya da detaya dokunmak merak uyandırıcı olurdu?",
+      {
+        "duo": "Bende en çok hangi bölgeye ya da detaya dokunmak merak uyandırıcı olurdu?",
+        "group": "Karşındaki insanda en çok hangi bölgeye ya da detaya dokunmak merak uyandırıcı olurdu?"
+      },
       "Bir öpücüğün mükemmel ve unutulmaz olması için gereken en önemli kıvılcım nedir?",
       "Daha önce birine sadece kokusu yüzünden karşı konulmaz bir çekim duydun mu?",
       "Baştan çıkarma konusunda avcı mısın yoksa av olmayı mı seversin?",
       "Yatak odasında dominant ve yönlendiren taraf olmak mı hoşuna gider, teslim olmak mı?",
       "Gecenin bir yarısı gelen kışkırtıcı bir mesaj seni ne kadar kolay yoldan çıkarabilir?",
       "Giyildiğinde seni anında etkileyen kıyafet veya iç çamaşırı tarzı nedir?",
-      "Seninle baş başa kalsak ve ışıklar loş olsa ilk cesur hareketin ne olurdu?",
+      {
+        "duo": "Benimle baş başa ve loş bir odada kalsan ilk cesur hareketin ne olurdu?",
+        "group": "Masadan birini seç (veya karşındakine dön): Onunla baş başa ve loş bir odada kalsanız ilk cesur hareketin ne olurdu?"
+      },
       "Hiç aklından geçen ama sesli söylemeye utandığın erotik bir hayalin oldu mu?",
       "Boyundan öpülmek mi, belden kavranmak mı senin nefesini daha çok keser?",
       "Bir buluşmada cinsel gerilimi bilerek tırmandırmayı sever misin?",
@@ -525,7 +858,10 @@ const CATEGORIES = {
       "Senin için 'seksi' kelimesinin tam karşılığı olan davranış nedir?",
       "Dudak ısırmak, saçla oynamak ya da gözleri kısmak... Hangi hareket seni savunmasız bırakır?",
       "Spontane, tutkulu ve hızlı bir an mı yoksa saatlerce süren yavaş ve derin bir temas mı?",
-      "Beni şu an baştan çıkarmak için 3 cümlen olsa ne söylerdin?",
+      {
+        "duo": "Beni şu an baştan çıkarmak için 3 cümlen olsa ne söylerdin?",
+        "group": "Masadan birini seç (veya karşındakine dön): Onu baştan çıkarmak için 3 cümlen olsa ne söylerdin?"
+      },
       "Hiç rüyanda tanıdığın biriyle tutkulu bir kaçamak yaşayıp uyanınca garip hissettin mi?",
       "Sence bir öpüşme ne kadar süre sonra ciddileşip kontrolden çıkmalıdır?",
       "Araba içi, asansör, balkon... Sıra dışı mekanlarda flört gerilimi yaşamak sana heyecan verir mi?",
@@ -534,7 +870,10 @@ const CATEGORIES = {
       "Bir ilişkide tutkunun hiç sönmemesi için en gizli taktiğin nedir?",
       "Sence cinsel çekim sonradan kazanılabilir mi yoksa ilk anda var mıdır ya da hiç yoktur?",
       "Gözlerin bağlıyken sadece dokunuşlarla ve sesle yönlendirilmek ilgini çeker mi?",
-      "Bana baktığında şu an içinde uyanan en cesur düşünce nedir?",
+      {
+        "duo": "Gözlerimin içine 5 saniye bak: Şu an içinden geçen en cesur düşünce nedir?",
+        "group": "Masadan birini seç ve 5 saniye gözlerine bak: İçinden geçen en cesur düşünce nedir?"
+      },
       "Hiç birine karşı koymak isteyip de çekimine yenik düştüğün oldu mu?",
       "Masaj yapmayı mı daha çok seversin, masajla şımartılmayı mı?",
       "Partnerinin üzerinde kontrol sahibi olmak mı, yoksa ipleri tamamen bırakmak mı?",
@@ -546,26 +885,47 @@ const CATEGORIES = {
       "Gece boyunca sürecek bir oyun oynasak ilk cezan ne olurdu?",
       "Fiziksel temas olmadan sadece konuşarak tahrik olmak mümkün müdür?",
       "En çok hangi kelimelerin fısıldanması kalbinin ritmini hızlandırır?",
-      "Bana şu an dokunma şansın olsa ilk nereye dokunurdun?",
+      {
+        "duo": "Bana şu an masum ya da cesur bir dokunuş yapma hakkın olsa ilk nereye dokunurdun?",
+        "group": "Masadan birine (veya karşındakine) masum ya da cesur bir dokunuş yapma hakkın olsa ilk nereye dokunurdun?"
+      },
       "İç çamaşırı seçiminde rahatlık mı ön plandadır, yoksa baştan çıkarıcılık mı?",
       "Sence aşk mı seksi güzelleştirir yoksa iyi seks mi aşkı doğurur?",
       "Hiç tanımadığın biriyle göz göze gelip saf bir cinsel elektrik hissettiğin oldu mu?",
-      "Birlikte bir duş ya da jakuzi keyfi hayal etsen ambiyans nasıl olurdu?",
+      {
+        "duo": "İkimiz loş bir ortamda jakuzi veya duş keyfi hayal etsek ambiyans ve müzik nasıl olurdu?",
+        "group": "Biriyle loş bir ortamda jakuzi veya duş keyfi hayal etsen ambiyans ve müzik nasıl olurdu?"
+      },
       "Senin için 'baştan çıkarmanın ustası' olmanın altın kuralı nedir?",
-      "Gözlerimin içine 10 saniye boyunca kırpmadan bakabilir misin?",
+      {
+        "duo": "Gözlerimin içine 10 saniye boyunca hiç kırpmadan bak.",
+        "group": "Masadan seçeceğin birinin gözlerinin içine 10 saniye boyunca hiç kırpmadan bak."
+      },
       "Partnerinin seni kucağına alması ya da duvara yaslaması seni heyecanlandırır mı?",
       "Sence en seksi dans türü hangisidir?",
       "Kendini en çekici ve karşı konulmaz hissettiğin anlar hangileridir?",
       "Sabah uyanır uyanmaz tutkulu bir temas mı, gece geç saatlerin yorgun sevişmesi mi?",
-      "Beni tek bir kelimeyle 'çekici' kılan özelliğim nedir?",
+      {
+        "duo": "Beni tek bir kelimeyle 'çekici' kılan özelliğimi söyle.",
+        "group": "Masadan birini seç: Onu tek bir kelimeyle 'çekici' kılan özelliği söyle."
+      },
       "Hiç biriyle sadece fiziksel çekim yüzünden günlerce aklından çıkaramadığın oldu mu?",
       "Rol yapma veya kurgusal senaryolar ilgini çeker mi?",
       "Partnerinin teninden parfüm kokusu mu gelmeli, yoksa doğal ten kokusu mu?",
-      "Dudaklarıma baktığında aklından geçen ilk düşünce ne?",
+      {
+        "duo": "Dudaklarıma baktığında aklından geçen ilk düşünce nedir?",
+        "group": "Karşındaki kişinin dudaklarına baktığında aklından geçen ilk düşünce nedir?"
+      },
       "Gecenin sonunda 'keşke daha ileri gitseydik' dediğin bir anın oldu mu?",
       "Seni baştan çıkarmak isteyen birinin asla yapmaması gereken hata nedir?",
-      "Şu an üzerimdeki kıyafetlerden birini çıkarma hakkın olsa hangisini seçerdin?",
-      "Birlikte bu odadan çıksak ilk nereye gitmek isterdin?",
+      {
+        "duo": "Şu an üzerimdeki hangi kıyafeti veya aksesuarı (ceket, saat, fular vb.) çıkarttırırdın?",
+        "group": "Masadan seçeceğin birinin hangi aksesuarını veya kıyafetini (ceket, saat, fular vb.) çıkarttırırdın?"
+      },
+      {
+        "duo": "İkimiz bu ortamdan kaçacak olsak nereye gitmek isterdin?",
+        "group": "Masadan birini yanına alıp bu ortamdan kaçacak olsan kimi seçerdin ve nereye giderdiniz?"
+      },
       "Birine arzuladığını fısıldamak için doğru zaman ne zaman gelir?",
       "Karşındaki kişinin saçını okşarken ya da boynunu tutarken ne hissedersin?",
       "Seninle yakınlaşmak isteyen biri önce hangi sinyali vermelidir?",
@@ -582,34 +942,39 @@ const CATEGORIES = {
       "Seninle başbaşa kalan biri hangi hissi en fazla alır: Güven, heyecan, sıcaklık?",
       "Şu an bu odada seni en çok cezbeden şey nedir?",
       "Bir öpücüğü 'hafıza kaydeden' kılan nedir?",
-      "Beni en çok şaşırtabilecek davranışın ne olurdu?",
+      "Karşındaki insanı en çok şaşırtabilecek cesur davranışın ne olurdu?",
       "İlk buluşmada dokunmanın doğal hissettirdiği an ne zaman gelir?",
       "Kendinden geçirten bir anın tam öncesinde neler hissediyorsun?",
-      "Seninle dans etsem hangi müziği çalardın ve nasıl tutardın beni?",
-      "Şu an bana bakışlarınla ne söylemek istiyorsun?",
+      {
+        "duo": "Benimle yakın bir dans edecek olsan hangi şarkıyı açardın ve beni nasıl tutardın?",
+        "group": "Masadan biriyle yakın bir dans edecek olsan kimi seçerdin ve hangi şarkıyı açardın?"
+      },
+      {
+        "duo": "Şu an bana bakışlarınla ne söylemek istiyorsun?",
+        "group": "Masadan birine bakışlarınla konuşacak olsan şu an ona ne söylüyor olurdun?"
+      },
       "Bir ilişkide bedensel yakınlık ile duygusal yakınlık senin için hangisi önce gelir?",
-      "Seni ilk öptüğümde ne hissettiğini merak ediyorum, gerçekten söyler misin?",
-      "Şu an bu anı nasıl daha unutulmaz kılabiliriz?"
+      "İlk öpüşmende içinde kopan fırtınayı ve o anki heyecanını dürüstçe anlatır mısın?",
+      "Şu an bu ortamı nasıl daha heyecanlı ve unutulmaz kılabiliriz?"
     ]
   },
-
-  nsfw: {
-    id: 'nsfw',
-    name: 'NSFW',
-    icon: '🔞',
-    tag: '18+ Sansürsüz & Açık',
-    description: 'Doğrudan, sansürsüz, yetişkin fantezileri ve cinsel deneyimler',
-    theme: {
-      primary: '#dc2626',
-      primaryDark: '#991b1b',
-      glow: 'rgba(220, 38, 38, 0.45)',
-      bgGradient: 'radial-gradient(circle at 50% 20%, #1a0305 0%, #050102 100%)',
-      cardBg: 'rgba(20, 3, 5, 0.92)',
-      badgeBg: 'rgba(220, 38, 38, 0.2)',
-      badgeBorder: 'rgba(220, 38, 38, 0.5)',
-      textColor: '#fee2e2'
+  "nsfw": {
+    "id": "nsfw",
+    "name": "NSFW",
+    "icon": "🔞",
+    "tag": "18+ Sansürsüz & Açık",
+    "description": "Doğrudan, sansürsüz, yetişkin fantezileri ve cinsel deneyimler",
+    "theme": {
+      "primary": "#dc2626",
+      "primaryDark": "#991b1b",
+      "glow": "rgba(220, 38, 38, 0.45)",
+      "bgGradient": "radial-gradient(circle at 50% 20%, #1a0305 0%, #050102 100%)",
+      "cardBg": "rgba(20, 3, 5, 0.92)",
+      "badgeBg": "rgba(220, 38, 38, 0.2)",
+      "badgeBorder": "rgba(220, 38, 38, 0.5)",
+      "textColor": "#fee2e2"
     },
-    questions: [
+    "questions": [
       "Yatakta en çok zevk aldığın ve olmazsa olmazın olan pozisyon hangisidir?",
       "Bugüne kadar yaşadığın en unutulmaz, en yoğun orgazm deneyimin nasıldı?",
       "Hiç kimseye anlatmadığın ama gizliden gizliye denemek istediğin en uç fantezin nedir?",
@@ -627,7 +992,7 @@ const CATEGORIES = {
       "Senin için ideal bir sevişmenin süresi ne kadar olmalıdır: Hızlı ve sert mi, uzun ve maraton mu?",
       "Hiç sexting yaparken orgazm oldun mu ya da kamera karşısında soyundun mu?",
       "Fetişlerin var mı: Ayak, çorap, deri, üniforma gibi detaylar seni tahrik eder mi?",
-      "Partnerinin vücudunda yalamaktan veya öpmekten en çok doyamadığın yer neresidir?",
+      "Partnerinin vücudunda öpmekten en çok doyamadığın yer neresidir?",
       "Hiç birden fazla kez art arda orgazm yaşadın mı?",
       "Yatakta en çok ses çıkaran, inleyen taraf mısın yoksa sessizce yaşayanlardan mı?",
       "Günün hangi saatinde seks yapmak sana en yüksek hazzı verir: Sabah mı, gece yarısı mı?",
@@ -682,45 +1047,53 @@ const CATEGORIES = {
       "Seksüel bir deneyi reddettiğin ve sonradan pişman olduğun bir şey var mı?",
       "Yatak performansın hakkında en çok hangi geri bildirimi aldın?",
       "Sabahın köründe uyandırılarak başlayan bir seks deneyimin oldu mu?",
-      "Hiç pornografide gördüğün bir sahneyi gerçek hayatta denemek istediğin oldu mu?",
+      "Hiç bir filmde gördüğün erotik sahneyi gerçek hayatta denemek istediğin oldu mu?",
       "Seksüel açıdan en özgür hissettiğin an hangisiydi?",
-      "Birine 'bu gece beni çıldırtacaksın' hissini veren davranış nedir?",
+      "Birine 'bu gece seni baştan çıkaracağım' hissini en net veren davranış nedir?",
       "Sevişirken müzik açsan hangi tür müzik seçerdin?",
       "Hiç tamamen karanlıkta seks yaşadın mı, nasıldı?",
-      "Partner değiştirmenin ilk gecesi seni en çok ne düşündürür?",
-      "Seksüel bir sınırı aşıp 'aslında iyiymiş' dediğin oldu mu?",
-      "Bedeninizde birbirini en çok uyandıran yer neresidir?",
+      "Yeni biriyle ilk gecede seni en çok düşündüren ya da heyecanlandıran şey nedir?",
+      "Seksüel bir sınırı aşıp 'aslında harikaymış' dediğin bir deneyim oldu mu?",
+      "Bir erkekte veya kadında seni en hızlı uyandıran dokunuş bölgesi neresidir?",
       "Bir ilişkide seksüel uyum mu yoksa duygusal bağ mı önce kurulur?",
-      "Şu an yanında olmak istediğin ve düşünceni en çok meşgul eden kişi kim?",
-      "Seksüel hayatında en büyük 'cesaret' yaptığın an neydi?",
-      "Bugüne kadar seks konusunda verdiğin en iyi karar ne oldu?",
-      "Şu an bu ortamda kim seni en çok heyecanlandırıyor?"
+      "Şu an zihninde seni en çok arzulandıran fantezi nedir?",
+      "Seksüel hayatında en büyük 'cesaret' gösterdiğin an neydi?",
+      "Bugüne kadar cinsel hayatında verdiğin en iyi karar ne oldu?",
+      {
+        "duo": "Şu an enerjinle beni ne kadar heyecanlandırdığının farkında mısın?",
+        "group": "Şu an bu masada veya ortamda enerjisiyle seni en çok etkileyen kim?"
+      }
     ]
   },
-
-  deep: {
-    id: 'deep',
-    name: 'En Gizli Sırlar',
-    icon: '🤫',
-    tag: 'İtiraflar & Mahremiyet',
-    description: 'Maskeleri düşüren, en derin itirafları ve gizli gerçekleri ortaya çıkaran sorular',
-    theme: {
-      primary: '#8b5cf6',
-      primaryDark: '#7c3aed',
-      glow: 'rgba(139, 92, 246, 0.35)',
-      bgGradient: 'radial-gradient(circle at 50% 20%, #1e1035 0%, #0c0517 100%)',
-      cardBg: 'rgba(28, 14, 51, 0.88)',
-      badgeBg: 'rgba(139, 92, 246, 0.15)',
-      badgeBorder: 'rgba(139, 92, 246, 0.4)',
-      textColor: '#ede9fe'
+  "deep": {
+    "id": "deep",
+    "name": "En Gizli Sırlar",
+    "icon": "🤫",
+    "tag": "İtiraflar & Mahremiyet",
+    "description": "Maskeleri düşüren, en derin itirafları ve gizli gerçekleri ortaya çıkaran sorular",
+    "theme": {
+      "primary": "#8b5cf6",
+      "primaryDark": "#7c3aed",
+      "glow": "rgba(139, 92, 246, 0.35)",
+      "bgGradient": "radial-gradient(circle at 50% 20%, #1e1035 0%, #0c0517 100%)",
+      "cardBg": "rgba(28, 14, 51, 0.88)",
+      "badgeBg": "rgba(139, 92, 246, 0.15)",
+      "badgeBorder": "rgba(139, 92, 246, 0.4)",
+      "textColor": "#ede9fe"
     },
-    questions: [
+    "questions": [
       "Hayatın boyunca söylediğin ve ortaya çıkarsa herkesi şok edecek en büyük yalan neydi?",
-      "En yakın arkadaşının dahi bilmediği, mezara kadar götürmeyi düşündüğün sırrın nedir?",
+      {
+        "duo": "Benim dahi bilmediğim, mezara kadar götürmeyi düşündüğün sırrın nedir?",
+        "group": "En yakın arkadaşının dahi bilmediği, mezara kadar götürmeyi düşündüğün sırrın nedir?"
+      },
       "Sosyal medyada gizlice sahte hesapla stalk'ladığın kişi kim ve en son ne zaman baktın?",
       "Hiç bir arkadaşının sevgilisine ya da eski sevgilisine karşı bir anlık da olsa ilgi duydun mu?",
       "Yaptığın ve hâlâ düşündükçe vicdan azabı çektiğin en bencilce hareketin neydi?",
-      "Grup içinde ya da arkadaş çevrende içten içe en çok kıskandığın veya çekemediğin kişi kim?",
+      {
+        "duo": "Bende içten içe en çok kıskandığın veya gıpta ettiğin özelliğim nedir?",
+        "group": "Grup içinde ya da arkadaş çevrende içten içe en çok kıskandığın veya gıpta ettiğin kişi kim?"
+      },
       "İnsanlara gösterdiğin mutlu/güçlü maskenin arkasında en çok sakladığın zayıflığın nedir?",
       "Hiç birinin arkasından çok ağır konuşup yüzüne karşı hiçbir şey olmamış gibi güldün mü?",
       "Hayatında birine yaptığın en büyük haksızlık ya da kötülük neydi?",
@@ -749,12 +1122,15 @@ const CATEGORIES = {
       "Hiç birinin özel mesajlarını, günlüğünü ya da telefonunu gizlice karıştırdın mı?",
       "Kendini zeki, yetenekli ya da başarılı göstermek için uydurduğun büyük bir abartı var mı?",
       "En son ne zaman birine 'seni seviyorum' deyip aslında hiçbir şey hissetmedin?",
-      "Gizli gizli dinlediğin ve arkadaşlarının bilse seninle dalga geçeceği müzik türü kim?",
+      "Gizli gizli dinlediğin ve arkadaşlarının bilse seninle dalga geçeceği şarkı veya sanatçı kim?",
       "Hiç borç alıp bilerek geri ödemediğin ya da unutturmaya çalıştığın biri oldu mu?",
       "Hayatındaki en büyük pişmanlığın olan o tek karar nedir?",
       "Hiç bir kaza yapıp başkasının üzerine attın mı?",
       "İnsanların senin hakkındaki en büyük yanılgısı nedir ve bunu düzeltmeye neden çalışmıyorsun?",
-      "Gruptaki kişilerden birinin arkasından en son ne zaman dedikodu yaptın?",
+      {
+        "duo": "Benim arkamdan hiç başkasıyla dertleştiğin ya da dedikodumu yaptığın oldu mu?",
+        "group": "Gruptaki kişilerden birinin arkasından en son ne zaman konuştun?"
+      },
       "Hiç sahte gözyaşı dökerek bir durumu kendi lehine çevirdin mi?",
       "Kendini en çok ne zaman çaresiz, yetersiz ve başarısız hissettin?",
       "Geçmişte sana aşık olan birinin duygularıyla bilerek ve isteyerek oynadın mı?",
@@ -764,7 +1140,10 @@ const CATEGORIES = {
       "En son ne zaman birine verdiğin sözü bilerek çiğnedin?",
       "Kendi ailenle ilgili dışarıya asla yansıtmadığın en büyük problem nedir?",
       "Hiç bir arkadaşının kıyafetini, tarzını ya da hayatını içten içe rezil bulduğun oldu mu?",
-      "Kendini şu an bu masadaki herkesten üstün gördüğün tek bir konu söyle.",
+      {
+        "duo": "Kendini şu an benden üstün gördüğün tek bir konu söyle.",
+        "group": "Kendini şu an bu masadaki herkesten üstün gördüğün tek bir konu söyle."
+      },
       "Hiçbir zaman gerçekleşmeyeceğini bildiğin ama vazgeçemediğin gizli hayalin ne?",
       "Sosyal statü veya popülerlik kazanmak için arkadaş grubunu sattığın oldu mu?",
       "Hiç birini stalk'larken yanlışlıkla fotoğrafını beğenip panikle hesabı dondurdun mu?",
@@ -779,7 +1158,10 @@ const CATEGORIES = {
       "İnsanların yanında asla yapmadığın ama yalnızken yaptığın en garip alışkanlığın ne?",
       "Hiç birini kıskandırmak için yapmacık bir mutluluk tiyatrosu oynadın mı?",
       "Eğer bugün dünyanın son günü olsaydı itiraf edeceğin o son cümle ne olurdu?",
-      "Bu masadaki birine şu an bakıp içinde tuttuğun en dürüst gerçeği söyler misin?",
+      {
+        "duo": "Bana şu an bakıp içinde tuttuğun en dürüst gerçeği söyler misin?",
+        "group": "Bu masadaki birine şu an bakıp içinde tuttuğun en dürüst gerçeği söyler misin?"
+      },
       "Hiç kendin hakkında internette bir şey aramak zorunda kaldın mı?",
       "Şu an hayatında en çok ne seni mahkum ediyor ama kimseye söyleyemiyorsun?",
       "Seni en derinden tanıyan insan ne bilir ki başkaları bilmiyor?",
@@ -795,13 +1177,19 @@ const CATEGORIES = {
       "Kendi karakterinin en utandığın yanını içtenlikle itiraf edebilir misin?",
       "Şimdiye kadar en uzun süre yaşattığın sır ne kadar süredir saklıyor?",
       "Hayatında geriye dönüp 'bu beni çok değiştirdi' dediğin ama kimseye anlatamadığın olay nedir?",
-      "Şu an bu odada seni en iyi anlayan kişi kim ve sen bunu ona söyledin mi?",
+      {
+        "duo": "Şu an beni gerçekten en iyi anlayan kişi olduğunu düşünüyor musun?",
+        "group": "Şu an bu odada seni en iyi anlayan kişi kim ve sen bunu ona söyledin mi?"
+      },
       "En son ne zaman 'bu kadar' deyip durman gerektiğini hissettin ama duramadın?",
       "Gece yarısı düşündüğünde kalbini en çok sıkan şey nedir?",
       "Şu an herkese söylemek istediğin ama cesaretini bulamadığın cümle nedir?",
       "Kendinle ilgili en korktuğun ve gerçek olabileceğini düşündüğün şey nedir?",
       "Şimdiye kadar yaptığın en iyi şey ne — ama bunu neden kimseye söylemiyorsun?",
-      "Bu masada oturan insanların bilmesini en çok isteyip de söyleyemediğin şey ne?"
+      {
+        "duo": "Benim bilmemi en çok isteyip de bugüne kadar söyleyemediğin şey ne?",
+        "group": "Bu masada oturan insanların bilmesini en çok isteyip de söyleyemediğin şey ne?"
+      }
     ]
   }
 };
